@@ -1,26 +1,58 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:is(.dark *));
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* --- Grift Regular (Main Global Font) --- */
+@font-face {
+  font-family: "GriftRegular";
+  src: url("../public/fonts/Grift-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* --- Lexend Deca Bold --- */
+@font-face {
+  font-family: "GriftBold";
+  src: url("../public/fonts/Grift-Bold.ttf") format("truetype");
+  font-style: normal;
+  font-display: swap;
+}
+
+/* --- Lexend Deca Regular --- */
+@font-face {
+  font-family: "LexendDeca";
+  src: url("../public/fonts/LexendDeca-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-grift: "GriftRegular", sans-serif;
+  --font-griftBold: "GriftBold", sans-serif;
+  /* --font-lexendBold: "LexendDecaBold", sans-serif; */
+  /* --font-mont: "LexendDeca", sans-serif; */
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Standardized Typography Across the Website */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* Grift is now the default font for all text */
+  font-family: var(--font-grift);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
