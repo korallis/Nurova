@@ -1,58 +1,30 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:is(.dark *));
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/*
+ * Brand fonts. `--font-grift-local` and `--font-lexend-deca-local` are set by
+ * next/font in app/layout.tsx; `inline` makes `font-grift` (and the default
+ * `font-sans`) resolve them on the element itself. Grift is the main typeface.
+ */
+@theme inline {
+  --font-grift: var(--font-grift-local), 'Grift', sans-serif;
+  --font-lexend-deca: var(--font-lexend-deca-local), 'Lexend Deca', sans-serif;
+  --font-sans: var(--font-grift-local), 'Grift', sans-serif;
+}
+
+@theme {
+  /* Brand palette, sampled from public/SVG (logo) and the coming-soon design */
+  --color-brand-purple: #51048A;
+  --color-brand-violet: #A43AE2;
+  --color-brand-magenta: #A3166E;
+  --color-brand-coral: #F45D5A;
+  --color-brand-ink: #2A0B47;
+}
 
 html {
   scroll-behavior: smooth;
 }
 
-/* --- Grift Regular (Main Global Font) --- */
-@font-face {
-  font-family: "GriftRegular";
-  src: url("../public/fonts/Grift-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* --- Lexend Deca Bold --- */
-@font-face {
-  font-family: "GriftBold";
-  src: url("../public/fonts/Grift-Bold.ttf") format("truetype");
-  font-style: normal;
-  font-display: swap;
-}
-
-/* --- Lexend Deca Regular --- */
-@font-face {
-  font-family: "LexendDeca";
-  src: url("../public/fonts/LexendDeca-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@theme {
-  --font-grift: "GriftRegular", sans-serif;
-  --font-griftBold: "GriftBold", sans-serif;
-  /* --font-lexendBold: "LexendDecaBold", sans-serif; */
-  /* --font-mont: "LexendDeca", sans-serif; */
-}
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-/* Standardized Typography Across the Website */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  /* Grift is now the default font for all text */
-  font-family: var(--font-grift);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
