@@ -14,7 +14,7 @@ import { renderBrandedEmail, type BrandedEmail } from './template';
  */
 
 const localTime = (date: Date) =>
-  date.toLocaleString('en-GB', { timeZone: 'Africa/Johannesburg', day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  date.toLocaleString('en-GB', { timeZone: 'Europe/London', day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
 
 async function deliver(route: EmailRoute, build: (s: EmailSettings) => { subject: string; email: Omit<BrandedEmail, 'siteUrl' | 'siteName'>; replyTo?: { address: string; name?: string } }) {
   try {

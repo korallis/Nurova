@@ -31,7 +31,7 @@ function download(body: string, name: string) {
 }
 
 const stamp = () => new Date().toISOString().slice(0, 10);
-const when = (d: Date) => d.toLocaleString('en-GB', { timeZone: 'Africa/Johannesburg' });
+const when = (d: Date) => d.toLocaleString('en-GB', { timeZone: 'Europe/London' });
 
 export async function GET(_request: Request, { params }: { params: Promise<{ form: string }> }) {
   const admin = await getCurrentAdmin();
