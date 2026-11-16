@@ -1,105 +1,110 @@
 'use client';
 
-import { useState, useTransition } from 'react';
-import { BotTrap, readBotMeta } from '@/components/forms/BotTrap';
-import { subscribeNewsletter } from '@/lib/forms/submit';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { AnimatePresence, MotionConfig, motion } from 'motion/react';
+import { StaggerItem } from '@/components/motion/Reveal';
 import type { SettingsContent } from '@/lib/content/pages';
+import { cn } from '@/lib/utils';
+import { EnquiryForm } from './EnquiryForm';
+import { NewsletterForm } from './NewsletterForm';
+import { Backdrop, BrandLockup, GlassCard, Hero, SocialLinks, coralButton } from './parts';
 
-const SOCIALS = [
-  { key: 'linkedin', label: 'LinkedIn', icon: '/icons/linkedin.svg' },
-  { key: 'instagram', label: 'Instagram', icon: '/icons/instagram.svg' },
-  { key: 'facebook', label: 'Facebook', icon: '/icons/facebook.svg' },
-] as const;
+const cardHeading = 'text-balance text-[clamp(2.25rem,3.65vw,4.375rem)] font-bold leading-[1.3]';
+const cardText = 'mt-[clamp(16px,1.6vw,30px)] text-[clamp(1.05rem,1.46vw,1.75rem)] leading-[1.36]';
 
-const focusRing = 'focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-purple';
+/** How one screen hands over to the next. */
+const screen = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1, transition: { duration: 0.6 } },
+  exit: { opacity: 0, y: -24, transition: { duration: 0.45, ease: [0.4, 0, 1, 1] as const } },
+};
 
-/** A white social icon; only a link once its URL is set in Site settings. */
-function SocialIcon({ href, label, icon }: { href: string; label: string; icon: string }) {
-  // eslint-disable-next-line @next/next/no-img-element
-  const image = <img src={icon} alt="" width={38} height={38} className="h-[38px] w-[38px]" />;
-  if (!href) return <span aria-hidden="true">{image}</span>;
+/** The thank-you screen. Starts at the top of the page with focus on its heading, since the form was far down. */
+function EnquirySent({ settings }: { settings: SettingsContent }) {
+  const { siteName, tagline, socials, enquirySent } = settings;
+  const heading = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+    heading.current?.focus();
+  }, []);
+
   return (
-    <a href={href} aria-label={label} target="_blank" rel="noopener noreferrer" className={`rounded-full transition-transform hover:scale-110 ${focusRing}`}>
-      {image}
-    </a>
+    <motion.main key="sent" {...screen} className="relative isolate flex min-h-svh w-full items-center overflow-hidden py-16 text-white">
+      <Backdrop />
+      <Hero
+        lockup={<BrandLockup siteName={siteName} tagline={tagline} />}
+        card={
+          <GlassCard>
+            <StaggerItem>
+              <h1 ref={heading} tabIndex={-1} className={cn(cardHeading, 'focus:outline-none')}>
+                {enquirySent.heading}
+              </h1>
+            </StaggerItem>
+            <StaggerItem>
+              <p className={cardText}>{enquirySent.body}</p>
+            </StaggerItem>
+            <StaggerItem className="mt-[clamp(28px,3.8vw,72px)] flex flex-wrap items-center gap-x-6 gap-y-10">
+              <NewsletterForm
+                source="enquiry-confirmation"
+                buttonLabel={enquirySent.subscribeLabel}
+                successMessage={enquirySent.subscribedMessage}
+                className="max-w-[432px] flex-1 basis-64"
+              />
+              <SocialLinks socials={socials} />
+            </StaggerItem>
+          </GlassCard>
+        }
+      />
+    </motion.main>
   );
 }
 
 /**
- * The pre-launch page (see next.config.ts). Every word on it comes from Site
- * settings in the dashboard; sign-ups are listed under Inbox → Newsletter.
+ * The pre-launch page (see next.config.ts): an introduction and the "Get in
+ * touch" form, swapped for a thank-you screen once an enquiry is sent. Every
+ * word comes from Site settings in the dashboard.
  */
 export function ComingSoon({ settings }: { settings: SettingsContent }) {
   const { siteName, tagline, socials, comingSoon } = settings;
-  const [email, setEmail] = useState('');
-  const [subscribed, setSubscribed] = useState(false);
-  const [error, setError] = useState('');
-  const [pending, startTransition] = useTransition();
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!email.trim() || pending || subscribed) return;
-    setError('');
-    const meta = readBotMeta(e.currentTarget);
-    startTransition(async () => {
-      const result = await subscribeNewsletter(email, 'coming-soon', meta).catch(() => ({ ok: false as const, error: 'Sorry, that didn’t work. Please try again.' }));
-      if (result.ok) setSubscribed(true);
-      else setError(result.error);
-    });
-  };
+  const [sent, setSent] = useState(false);
+  const showSent = useCallback(() => setSent(true), []);
 
   return (
-    <main className="relative flex min-h-svh w-full flex-col items-center justify-center overflow-hidden bg-brand-purple bg-[url('/background.png')] bg-cover bg-center px-6 py-12 text-white">
-      {/* Sizes follow the 1920×1080 design, scaling down on smaller screens. */}
-      <h1 className="sr-only">{siteName}</h1>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/logo-stacked.svg"
-        alt={siteName}
-        width={504}
-        height={339}
-        className="h-auto w-[clamp(200px,27.6vw,530px)] brightness-0 invert select-none"
-      />
+    // Respects the visitor's reduced-motion setting: things fade instead of moving.
+    <MotionConfig reducedMotion="user">
+      <AnimatePresence mode="wait" initial={false}>
+        {sent ? (
+          <EnquirySent key="sent" settings={settings} />
+        ) : (
+          <motion.main key="form" {...screen} className="relative isolate w-full overflow-hidden pb-[clamp(64px,8vw,160px)] text-white">
+            <Backdrop flipped />
+            <div className="flex min-h-svh items-center py-16 lg:min-h-[min(100svh,980px)]">
+              <Hero
+                lockup={<BrandLockup siteName={siteName} tagline={tagline} />}
+                card={
+                  <GlassCard>
+                    <StaggerItem>
+                      <h1 className={cardHeading}>{comingSoon.title}</h1>
+                    </StaggerItem>
+                    <StaggerItem>
+                      <p className={cardText}>{comingSoon.intro}</p>
+                    </StaggerItem>
+                    <StaggerItem className="mt-[clamp(24px,1.9vw,36px)] flex flex-wrap items-center justify-between gap-6">
+                      <a href="#get-in-touch" className={cn(coralButton, 'h-[50px] text-[clamp(1.1rem,1.25vw,1.5rem)]')}>
+                        {comingSoon.ctaLabel}
+                      </a>
+                      <SocialLinks socials={socials} />
+                    </StaggerItem>
+                  </GlassCard>
+                }
+              />
+            </div>
 
-      <p className="mt-[clamp(14px,2.3vh,26px)] text-center text-[clamp(1.1rem,2.08vw,2.5rem)] leading-tight tracking-wide text-balance">{tagline}</p>
-
-      <h2 className="mt-[clamp(18px,3.2vh,36px)] text-center text-[clamp(1.9rem,3.2vw,3.85rem)] font-bold leading-tight">{comingSoon.heading}</h2>
-
-      <form onSubmit={handleSubmit} className="relative mt-[clamp(24px,3.8vh,42px)] h-[50px] w-[min(598px,100%)]">
-        <label htmlFor="email" className="sr-only">
-          Email
-        </label>
-        <input
-          id="email"
-          type="email"
-          required
-          autoComplete="email"
-          value={email}
-          readOnly={subscribed}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          aria-invalid={Boolean(error)}
-          aria-describedby="subscribe-status"
-          className={`h-full w-full rounded-full bg-white pl-6 pr-36 text-[17px] font-medium text-[#333] placeholder:text-[#BDBDBD] ${focusRing}`}
-        />
-        <button
-          type="submit"
-          disabled={pending || subscribed}
-          className={`absolute right-0 top-0 h-full min-w-[130px] cursor-pointer rounded-full bg-brand-coral px-5 text-[18px] font-bold text-white transition hover:brightness-95 disabled:cursor-default disabled:opacity-90 ${focusRing}`}
-        >
-          {subscribed ? 'Subscribed' : pending ? 'Sending…' : comingSoon.buttonLabel}
-        </button>
-        <BotTrap />
-        <p id="subscribe-status" role={error ? 'alert' : 'status'} className="absolute inset-x-0 top-full mt-2 text-center text-sm font-medium">
-          {error || (subscribed ? comingSoon.successMessage : '')}
-        </p>
-      </form>
-
-      <div className="mt-[clamp(40px,5vh,56px)] flex items-center gap-[17px]">
-        {SOCIALS.map(({ key, label, icon }) => (
-          <SocialIcon key={key} href={socials[key]} label={label} icon={icon} />
-        ))}
-      </div>
-    </main>
+            <EnquiryForm heading={comingSoon.formHeading} submitLabel={comingSoon.submitLabel} onSent={showSent} />
+          </motion.main>
+        )}
+      </AnimatePresence>
+    </MotionConfig>
   );
 }

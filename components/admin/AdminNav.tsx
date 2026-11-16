@@ -12,18 +12,22 @@ interface NavLink {
   label: string;
   icon: typeof Inbox;
   exact?: boolean;
+  badge?: 'inbox';
   /** Only shown to admins with access to this area. */
   area?: AdminArea;
 }
 
 const LINKS: NavLink[] = [
   { href: '/admin', label: 'Overview', icon: LayoutDashboard, exact: true },
-  { href: '/admin/inbox', label: 'Inbox', icon: Inbox, area: 'inbox' },
+  { href: '/admin/inbox', label: 'Inbox', icon: Inbox, badge: 'inbox', area: 'inbox' },
   { href: '/admin/content', label: 'Website content', icon: FileText, area: 'content' },
 ];
 
-/** `areas` are the parts of the dashboard this admin can use. */
-export function AdminNav({ name, areas, superAdmin }: { name: string; areas: AdminArea[]; superAdmin: boolean }) {
+/**
+ * `counts` are unread Inbox messages, shown as a badge.
+ * `areas` are the parts of the dashboard this admin can use.
+ */
+export function AdminNav({ name, counts, areas, superAdmin }: { name: string; counts: { inbox: number }; areas: AdminArea[]; superAdmin: boolean }) {
   const pathname = usePathname();
   // Managers use the same page to change their own password.
   const links = [
@@ -35,8 +39,9 @@ export function AdminNav({ name, areas, superAdmin }: { name: string; areas: Adm
 
   return (
     <nav aria-label="Dashboard" className="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto p-4 text-sm">
-      {links.map(({ href, label, icon: Icon, exact }: NavLink) => {
+      {links.map(({ href, label, icon: Icon, exact, badge }: NavLink) => {
         const active = exact ? pathname === href : pathname.startsWith(href);
+        const n = badge ? counts[badge] : 0;
         return (
           <Link
             key={href}
@@ -48,6 +53,12 @@ export function AdminNav({ name, areas, superAdmin }: { name: string; areas: Adm
             )}
           >
             <Icon className="h-4 w-4" aria-hidden="true" /> {label}
+            {n > 0 && (
+              <span className="ml-auto rounded-full bg-brand-coral px-2 py-0.5 text-[11px] font-bold text-white">
+                {n > 99 ? '99+' : n}
+                <span className="sr-only"> new</span>
+              </span>
+            )}
           </Link>
         );
       })}

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { count, desc } from 'drizzle-orm';
+import { count, desc, isNull } from 'drizzle-orm';
 import { AlertTriangle, FileText, Inbox, Lock, Users } from 'lucide-react';
 import { db, schema } from '@/lib/db';
 import { requireAdmin } from '@/lib/auth/dal';
@@ -9,7 +9,8 @@ export default async function AdminHome({ searchParams }: PageProps<'/admin'>) {
   const admin = await requireAdmin();
   const { denied } = await searchParams;
   const can = (area: AdminArea) => canAccess(admin, area);
-  const [[subscribers], [admins], recent] = await Promise.all([
+  const [[unreadMessages], [subscribers], [admins], recent] = await Promise.all([
+    db().select({ n: count() }).from(schema.formSubmissions).where(isNull(schema.formSubmissions.readAt)),
     db().select({ n: count() }).from(schema.newsletterSubscribers),
     db().select({ n: count() }).from(schema.adminUsers),
     db().select({ key: schema.content.key, updatedAt: schema.content.updatedAt }).from(schema.content).orderBy(desc(schema.content.updatedAt)).limit(5),
@@ -20,7 +21,9 @@ export default async function AdminHome({ searchParams }: PageProps<'/admin'>) {
       area: 'inbox',
       href: '/admin/inbox',
       label: 'Inbox',
-      detail: `${subscribers.n} newsletter subscriber${subscribers.n === 1 ? '' : 's'}`,
+      detail: unreadMessages.n
+        ? `${unreadMessages.n} unread message${unreadMessages.n === 1 ? '' : 's'}`
+        : `Enquiries and ${subscribers.n} newsletter subscriber${subscribers.n === 1 ? '' : 's'}`,
       icon: Inbox,
     },
     { area: 'content', href: '/admin/content', label: 'Website content', detail: 'Site settings and the coming-soon page', icon: FileText },
@@ -36,7 +39,7 @@ export default async function AdminHome({ searchParams }: PageProps<'/admin'>) {
     <div className="space-y-8">
       <header>
         <h1 className="text-2xl font-bold sm:text-3xl">Hello, {admin.name.split(' ')[0]}</h1>
-        <p className="mt-1 text-sm text-neutral-500">See who has signed up and edit the website’s content. Changes go live as soon as you save.</p>
+        <p className="mt-1 text-sm text-neutral-500">Read enquiries, see who has signed up and edit the website’s content. Changes go live as soon as you save.</p>
       </header>
 
       {deniedLabel && (

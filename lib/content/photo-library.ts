@@ -12,6 +12,6 @@ export interface LibraryPhoto {
 
 export const PHOTO_LIBRARY: LibraryPhoto[] = [
   { src: '/background.png', width: 1920, height: 1080, transparent: false },
-  { src: '/logo-stacked.svg', width: 504, height: 339, transparent: true },
+  { src: '/SVG/nurova2.svg', width: 504, height: 429, transparent: true },
   { src: '/logo-wordmark.svg', width: 504, height: 165, transparent: true },
 ];

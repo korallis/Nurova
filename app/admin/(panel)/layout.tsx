@@ -1,12 +1,26 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { count, isNull } from 'drizzle-orm';
 import { requireAdmin } from '@/lib/auth/dal';
-import { AREA_KEYS, canAccess, isSuperAdmin } from '@/lib/auth/permissions';
+import { AREA_KEYS, canAccess, isSuperAdmin, type AdminArea } from '@/lib/auth/permissions';
+import { db, schema } from '@/lib/db';
 import { AdminNav } from '@/components/admin/AdminNav';
+
+/** Badge counts for the menu, only for areas the admin can open; a database hiccup just hides them. */
+async function menuCounts(areas: AdminArea[]) {
+  if (!areas.includes('inbox')) return { inbox: 0 };
+  try {
+    const [inbox] = await db().select({ n: count() }).from(schema.formSubmissions).where(isNull(schema.formSubmissions.readAt));
+    return { inbox: inbox.n };
+  } catch {
+    return { inbox: 0 };
+  }
+}
 
 export default async function PanelLayout({ children }: { children: React.ReactNode }) {
   const admin = await requireAdmin();
   const areas = AREA_KEYS.filter((area) => canAccess(admin, area));
+  const counts = await menuCounts(areas);
 
   return (
     <div className="flex min-h-screen flex-col md:flex-row">
@@ -14,7 +28,7 @@ export default async function PanelLayout({ children }: { children: React.ReactN
         <Link href="/admin" className="block px-5 pt-5" aria-label="Dashboard home">
           <Image src="/logo-wordmark.svg" width={504} height={165} alt="Nurova" className="h-auto w-28 brightness-0 invert" />
         </Link>
-        <AdminNav name={admin.name} areas={areas} superAdmin={isSuperAdmin(admin)} />
+        <AdminNav name={admin.name} counts={counts} areas={areas} superAdmin={isSuperAdmin(admin)} />
       </aside>
       <main className="min-w-0 flex-1 px-4 py-6 sm:px-8 sm:py-8">
         <div className="mx-auto max-w-5xl">{children}</div>

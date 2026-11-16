@@ -1,5 +1,8 @@
 /** The website forms that can be emailed, as listed in Settings → Email. Shared by the dashboard and the server. */
-export const EMAIL_ROUTES = [{ id: 'newsletter', label: 'Newsletter sign-ups', defaultOn: false }] as const;
+export const EMAIL_ROUTES = [
+  { id: 'enquiry', label: 'Get in touch enquiries', defaultOn: true },
+  { id: 'newsletter', label: 'Newsletter sign-ups', defaultOn: false },
+] as const;
 
 export type EmailRoute = (typeof EMAIL_ROUTES)[number]['id'];
 

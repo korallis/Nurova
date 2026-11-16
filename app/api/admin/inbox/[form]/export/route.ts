@@ -1,11 +1,12 @@
-import { asc } from 'drizzle-orm';
+import { asc, eq } from 'drizzle-orm';
 import { getCurrentAdmin } from '@/lib/auth/dal';
 import { canAccess } from '@/lib/auth/permissions';
 import { db, schema } from '@/lib/db';
-import { newsletterSourceLabel } from '@/lib/forms/shared';
+import { INBOXES, SUBMISSION_STATUS_LABELS, newsletterSourceLabel } from '@/lib/forms/shared';
+import type { FormKind } from '@/lib/db/schema';
 
 /**
- * CSV download of one inbox (for now, the newsletter list) for spreadsheets
+ * CSV download of one inbox (or the newsletter list) for spreadsheets
  * and email tools. Signed-in admins only.
  */
 
@@ -47,5 +48,27 @@ export async function GET(_request: Request, { params }: { params: Promise<{ for
     );
   }
 
-  return new Response('Not found', { status: 404 });
+  if (!Object.hasOwn(INBOXES, form)) return new Response('Not found', { status: 404 });
+  const messages = await db()
+    .select()
+    .from(schema.formSubmissions)
+    .where(eq(schema.formSubmissions.form, form as FormKind))
+    .orderBy(asc(schema.formSubmissions.createdAt));
+
+  // One column per answer, in the order they first appear.
+  const columns: string[] = [];
+  for (const m of messages) for (const s of m.answers) for (const f of s.fields) {
+    const key = `${s.title}: ${f.label}`;
+    if (!columns.includes(key)) columns.push(key);
+  }
+
+  const rows = messages.map((m) => {
+    const answers = new Map<string, string>(m.answers.flatMap((s) => s.fields.map((f) => [`${s.title}: ${f.label}`, f.value] as [string, string])));
+    return [m.reference, when(m.createdAt), SUBMISSION_STATUS_LABELS[m.status], m.name, m.email, m.phone, m.subject, ...columns.map((c) => answers.get(c) ?? ''), m.notes];
+  });
+
+  return download(
+    csv([['Reference', 'Received', 'Status', 'Name', 'Email', 'Phone', 'Subject', ...columns, 'Team notes'], ...rows]),
+    `${form}-${stamp()}.csv`
+  );
 }

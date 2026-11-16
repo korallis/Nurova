@@ -12,7 +12,7 @@ export const settingsSchema: Field = object({
   tagline: text('Tagline', { help: 'Shown under the logo on the coming-soon page and in browser tabs after the site name.' }),
   description: textarea('Search engine description', { rows: 2 }),
   contact: object(
-    { enquiriesEmail: text('Enquiries email', { help: 'Shown to visitors if a form can’t be sent.' }) },
+    { enquiriesEmail: text('Enquiries email', { help: 'Shown to visitors if a form can’t be sent, and where enquiry emails go by default.' }) },
     'Contact details'
   ),
   socials: object(
@@ -22,10 +22,22 @@ export const settingsSchema: Field = object({
   ),
   comingSoon: object(
     {
-      heading: text('Heading'),
-      buttonLabel: text('Subscribe button label'),
-      successMessage: text('Message after subscribing'),
+      title: text('Heading'),
+      intro: textarea('Introduction', { rows: 3 }),
+      ctaLabel: text('Button label', { help: 'The button that scrolls down to the form.' }),
+      formHeading: text('Form heading'),
+      submitLabel: text('Send button label'),
     },
     'Coming-soon page'
+  ),
+  enquirySent: object(
+    {
+      heading: text('Heading'),
+      body: textarea('Message', { rows: 3 }),
+      subscribeLabel: text('Subscribe button label'),
+      subscribedMessage: text('Message after subscribing'),
+    },
+    'After sending an enquiry',
+    'Shown in place of the coming-soon page once someone sends the form.'
   ),
 });

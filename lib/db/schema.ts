@@ -36,6 +36,36 @@ export const content = pgTable('content', {
   updatedBy: uuid('updated_by').references(() => adminUsers.id, { onDelete: 'set null' }),
 });
 
+/** The website forms that feed the dashboard Inbox. */
+export const formKind = pgEnum('form_kind', ['enquiry']);
+export const submissionStatus = pgEnum('submission_status', ['open', 'resolved', 'archived']);
+
+/** A labelled answer, grouped into the form's sections so any form can be shown in the Inbox. */
+export interface SubmissionSection {
+  title: string;
+  fields: { label: string; value: string }[];
+}
+
+/** One message sent through a website form. */
+export const formSubmissions = pgTable('form_submissions', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  form: formKind('form').notNull(),
+  /** Given to the sender, e.g. NV-E-7KQ2XP. */
+  reference: text('reference').notNull().unique(),
+  name: text('name').notNull(),
+  email: text('email').notNull(),
+  phone: text('phone').notNull().default(''),
+  /** One line for the inbox list. */
+  subject: text('subject').notNull(),
+  answers: jsonb('answers').$type<SubmissionSection[]>().notNull(),
+  status: submissionStatus('status').notNull().default('open'),
+  /** Set the first time someone opens it in the dashboard. */
+  readAt: timestamp('read_at', { withTimezone: true }),
+  notes: text('notes').notNull().default(''),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
 /** Newsletter sign-ups, e.g. from the coming-soon page. */
 export const newsletterSubscribers = pgTable('newsletter_subscribers', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -59,3 +89,6 @@ export const appSettings = pgTable('app_settings', {
 
 export type AdminUser = typeof adminUsers.$inferSelect;
 export type NewsletterSubscriber = typeof newsletterSubscribers.$inferSelect;
+export type FormSubmission = typeof formSubmissions.$inferSelect;
+export type FormKind = (typeof formKind.enumValues)[number];
+export type SubmissionStatus = (typeof submissionStatus.enumValues)[number];

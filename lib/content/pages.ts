@@ -19,24 +19,43 @@ export interface SettingsContent {
   /** Leave a link empty until the account exists; its icon still shows. */
   socials: { linkedin: string; instagram: string; facebook: string };
   comingSoon: {
+    title: string;
+    intro: string;
+    /** The button that scrolls down to the form. */
+    ctaLabel: string;
+    formHeading: string;
+    submitLabel: string;
+  };
+  /** Shown in place of the coming-soon page once an enquiry is sent. */
+  enquirySent: {
     heading: string;
-    buttonLabel: string;
-    /** Shown in place of the form after someone subscribes. */
-    successMessage: string;
+    body: string;
+    subscribeLabel: string;
+    /** Shown after someone subscribes. */
+    subscribedMessage: string;
   };
 }
 
 export const DEFAULT_SETTINGS: SettingsContent = {
-  siteName: 'Nurova',
+  siteName: 'Nurova Minds',
   tagline: 'Understanding Minds. Transforming Lives.',
-  description: 'Nurova: understanding minds, transforming lives. Our website is launching soon.',
+  description: 'Nurova Minds: ADHD and autism assessments and support. Understanding minds, transforming lives. Our website is launching soon.',
   contact: {
     enquiriesEmail: '',
   },
   socials: { linkedin: '', instagram: '', facebook: '' },
   comingSoon: {
-    heading: 'Launching Soon',
-    buttonLabel: 'Subscribe',
-    successMessage: 'Thanks for subscribing! We’ll let you know when we launch.',
+    title: 'We’re Launching Very Soon.',
+    intro:
+      'If you’re exploring an ADHD or autism assessment for yourself or someone you support, or you’d like to discuss professional referral pathways, we’d love to hear from you.',
+    ctaLabel: 'Get in touch',
+    formHeading: 'Get in touch',
+    submitLabel: 'Send enquiry',
+  },
+  enquirySent: {
+    heading: 'We’ll be in touch with you soon!',
+    body: 'Thank you for getting in touch with Nurova Minds. We’ve received your enquiry and will email you about the next steps.',
+    subscribeLabel: 'Subscribe',
+    subscribedMessage: 'Thanks for subscribing! We’ll keep you posted.',
   },
 };

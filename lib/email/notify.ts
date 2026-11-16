@@ -1,8 +1,9 @@
 import 'server-only';
 import { getSingle } from '@/lib/content/queries';
-import { newsletterSourceLabel } from '@/lib/forms/shared';
+import type { FormKind, SubmissionSection } from '@/lib/db/schema';
+import { INBOXES, newsletterSourceLabel } from '@/lib/forms/shared';
 import { sendGraphMail } from './graph';
-import { parseAddresses, type EmailRoute } from './routes';
+import { EMAIL_ROUTES, parseAddresses, type EmailRoute } from './routes';
 import { getEmailSettings, isConfigured, type EmailSettings } from './settings';
 import { renderBrandedEmail, type BrandedEmail } from './template';
 
@@ -28,6 +29,37 @@ async function deliver(route: EmailRoute, build: (s: EmailSettings) => { subject
   } catch (error) {
     console.error(`[email] Couldn’t email a ${route} submission`, error);
   }
+}
+
+export interface SavedSubmission {
+  form: FormKind;
+  id: string;
+  reference: string;
+  name: string;
+  email: string;
+  phone: string;
+  subject: string;
+  answers: SubmissionSection[];
+  createdAt: Date;
+}
+
+export function notifySubmission(s: SavedSubmission) {
+  const formName = EMAIL_ROUTES.find((r) => r.id === s.form)?.label ?? INBOXES[s.form].label;
+  return deliver(s.form, (settings) => ({
+    subject: `${formName}: ${s.subject} (${s.reference})`,
+    replyTo: s.email ? { address: s.email, name: s.name } : undefined,
+    email: {
+      eyebrow: `Website form · ${formName}`,
+      heading: s.subject,
+      meta: [
+        { label: 'Reference', value: s.reference },
+        { label: 'Received', value: localTime(s.createdAt) },
+      ],
+      sections: s.answers,
+      button: { label: 'Open in dashboard', href: `${settings.siteUrl}/admin/inbox/${s.form}/${s.id}` },
+      note: s.email ? `Reply to this email to answer ${s.name || 'them'} directly at ${s.email}.` : undefined,
+    },
+  }));
 }
 
 export function notifyNewsletter(email: string, source: string) {
