@@ -13,7 +13,8 @@ const BRAND = {
   lilac: '#E9DDF7',
   page: '#F6F1FB',
 };
-const FONT = "'Lexend Deca', 'Segoe UI', Arial, sans-serif";
+/** Grift (loaded in the email's <style>), then the closest system fonts for clients that can't load it, e.g. Outlook and Gmail. */
+const FONT = "'Grift', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif";
 
 export const escapeHtml = (value: string) =>
   value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
@@ -89,6 +90,12 @@ export function renderBrandedEmail(email: BrandedEmail): string {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light only">
 <title>${text(email.heading)}</title>
+<style>
+  /* Grift, the brand font, from the website. Apple Mail and some others use it; the rest fall back (see FONT). */
+  @font-face { font-family: 'Grift'; font-weight: 400; font-style: normal; src: url('${escapeHtml(email.siteUrl)}/fonts/Grift-Regular.ttf') format('truetype'); }
+  @font-face { font-family: 'Grift'; font-weight: 500; font-style: normal; src: url('${escapeHtml(email.siteUrl)}/fonts/Grift-Medium.ttf') format('truetype'); }
+  @font-face { font-family: 'Grift'; font-weight: 700; font-style: normal; src: url('${escapeHtml(email.siteUrl)}/fonts/Grift-Bold.ttf') format('truetype'); }
+</style>
 </head>
 <body style="margin:0;padding:0;background:${BRAND.page};">
   <div style="display:none;max-height:0;overflow:hidden;">${text(email.intro ?? email.heading)}</div>

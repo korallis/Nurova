@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 /*
- * Brand fonts. `--font-grift-local` and `--font-lexend-deca-local` are set by
- * next/font in app/layout.tsx; `inline` makes `font-grift` (and the default
- * `font-sans`) resolve them on the element itself. Grift is the main typeface.
+ * Brand font. `--font-grift-local` is set by next/font in app/layout.tsx;
+ * `inline` makes `font-grift` and the default `font-sans` resolve it on the
+ * element itself. Tailwind uses `font-sans` for the whole page, and form
+ * fields and buttons inherit it, so Grift is the only typeface on the site.
  */
 @theme inline {
   --font-grift: var(--font-grift-local), 'Grift', sans-serif;
-  --font-lexend-deca: var(--font-lexend-deca-local), 'Lexend Deca', sans-serif;
   --font-sans: var(--font-grift-local), 'Grift', sans-serif;
 }
 

@@ -143,12 +143,12 @@ export function EmailSettingsForm({ settings }: { settings: EmailSettingsView })
           </div>
           <label className={label}>
             Tenant ID
-            <input name="tenantId" defaultValue={settings.tenantId} autoComplete="off" spellCheck={false} placeholder="00000000-0000-0000-0000-000000000000" className={`${inputClass} mt-1 font-mono`} />
+            <input name="tenantId" defaultValue={settings.tenantId} autoComplete="off" spellCheck={false} placeholder="00000000-0000-0000-0000-000000000000" className={`${inputClass} mt-1 tabular-nums`} />
             {envNote(settings.fromEnv.tenantId, 'MICROSOFT_GRAPH_TENANT_ID')}
           </label>
           <label className={label}>
             Client ID (application ID)
-            <input name="clientId" defaultValue={settings.clientId} autoComplete="off" spellCheck={false} placeholder="00000000-0000-0000-0000-000000000000" className={`${inputClass} mt-1 font-mono`} />
+            <input name="clientId" defaultValue={settings.clientId} autoComplete="off" spellCheck={false} placeholder="00000000-0000-0000-0000-000000000000" className={`${inputClass} mt-1 tabular-nums`} />
             {envNote(settings.fromEnv.clientId, 'MICROSOFT_GRAPH_CLIENT_ID')}
           </label>
           <label className={label}>
@@ -159,7 +159,7 @@ export function EmailSettingsForm({ settings }: { settings: EmailSettingsView })
               autoComplete="new-password"
               spellCheck={false}
               placeholder={settings.hasSecret ? 'Saved. Leave blank to keep it' : 'The secret’s value (not its ID)'}
-              className={`${inputClass} mt-1 font-mono`}
+              className={`${inputClass} mt-1 tabular-nums`}
             />
             <span className={help}>Stored encrypted and never shown again. Secrets expire in Microsoft; paste the new one here when it does.</span>
             {envNote(settings.fromEnv.clientSecret, 'MICROSOFT_GRAPH_CLIENT_SECRET')}

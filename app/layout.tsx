@@ -3,23 +3,20 @@ import localFont from 'next/font/local';
 import { getSingle } from '@/lib/content/queries';
 import './globals.css';
 
+/*
+ * Grift is the brand font and the only typeface on the site, dashboard
+ * included. It comes in three weights: semibold (600) text uses Bold, the
+ * nearest heavier weight, so browsers never fake a bold.
+ */
 const grift = localFont({
   src: [
-    { path: '../public/fonts/Grift-Regular.ttf', weight: '400' },
-    { path: '../public/fonts/Grift-Medium.ttf', weight: '500' },
-    { path: '../public/fonts/Grift-Bold.ttf', weight: '700' },
+    { path: '../public/fonts/Grift-Regular.ttf', weight: '400', style: 'normal' },
+    { path: '../public/fonts/Grift-Medium.ttf', weight: '500', style: 'normal' },
+    { path: '../public/fonts/Grift-Bold.ttf', weight: '700', style: 'normal' },
   ],
   variable: '--font-grift-local',
-});
-
-const lexendDeca = localFont({
-  src: [
-    { path: '../public/fonts/LexendDeca-Regular.ttf', weight: '400' },
-    { path: '../public/fonts/LexendDeca-Medium.ttf', weight: '500' },
-    { path: '../public/fonts/LexendDeca-SemiBold.ttf', weight: '600' },
-    { path: '../public/fonts/LexendDeca-Bold.ttf', weight: '700' },
-  ],
-  variable: '--font-lexend-deca-local',
+  display: 'swap',
+  fallback: ['Segoe UI', 'Helvetica Neue', 'Arial', 'sans-serif'],
 });
 
 // Site name, tagline and description are edited in the dashboard (Site settings).
@@ -36,7 +33,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
-    <html lang="en" className={`${grift.variable} ${lexendDeca.variable}`} data-scroll-behavior="smooth">
+    <html lang="en" className={grift.variable} data-scroll-behavior="smooth">
       <body className="flex min-h-full flex-col font-sans">{children}</body>
     </html>
   );
