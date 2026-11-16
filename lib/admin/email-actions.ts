@@ -63,7 +63,7 @@ export async function checkConnectionAction(): Promise<ConnectionState> {
   const tenant = encodeURIComponent(settings.tenantId);
   const client = encodeURIComponent(settings.clientId);
   return {
-    checkedAt: new Date().toLocaleTimeString('en-GB', { timeZone: 'Africa/Johannesburg' }),
+    checkedAt: new Date().toLocaleTimeString('en-GB', { timeZone: 'Europe/London' }),
     result,
     links: {
       permissions: `https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/CallAnAPI/appId/${client}`,

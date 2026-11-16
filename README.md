@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nurova
 
-## Getting Started
+Marketing site and admin dashboard for Nurova, built with Next.js. Owned by **Muve Healthcare Ltd** and hosted entirely in the UK:
 
-First, run the development server:
+| Service | Where | Region |
+| --- | --- | --- |
+| Vercel project `nurova` | team `muve-healthcare` | functions in `lhr1` (London), pinned in `vercel.json` |
+| Postgres (Neon, via Vercel Marketplace) | store `Nurova-DB` | `lhr1` |
+| Vercel Blob (dashboard uploads) | store `nurova-uploads` | `lhr1` |
+
+Dates in the dashboard and in notification emails use `en-GB` and `Europe/London`.
+
+## Develop
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+bun install
+vercel link --scope muve-healthcare --project nurova   # one-time
+vercel env pull .env.local                              # DATABASE_URL, SESSION_SECRET, BLOB_READ_WRITE_TOKEN
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open <http://localhost:3000>. Without `DATABASE_URL` the site serves its built-in copy; the dashboard at `/admin` needs the database.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Dashboard, database and email
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+See [docs/dashboard.md](docs/dashboard.md) for migrations (`bun run db:migrate`), seeding, creating the first admin and Microsoft 365 email setup.
 
-## Learn More
+## Deploy
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Pushes to `main` deploy to production through the Vercel GitHub integration. Environment variables live in Vercel → `muve-healthcare/nurova` → Settings → Environment Variables; the Neon and Blob stores set theirs automatically.
