@@ -68,12 +68,12 @@ interface StaggerProps {
   stagger?: number;
   delay?: number;
   onLoad?: boolean;
-  as?: 'div' | 'ul';
+  as?: 'div' | 'ul' | 'ol';
 }
 
 /** Parent for `StaggerItem`s: the items animate in one after another. */
 export function Stagger({ children, className, stagger = 0.1, delay = 0, onLoad = false, as = 'div' }: StaggerProps) {
-  const Comp = as === 'ul' ? motion.ul : motion.div;
+  const Comp = as === 'ul' ? motion.ul : as === 'ol' ? motion.ol : motion.div;
   return (
     <Comp
       className={className}

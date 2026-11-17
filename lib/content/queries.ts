@@ -26,7 +26,7 @@ async function safely<T>(what: string, run: () => Promise<T>, fallback: T): Prom
  * Part of the content cache keys (one per document). Bump it when a content type changes shape
  * so cached copies in the old shape aren't served (they outlive deploys).
  */
-const SHAPE_VERSION = '3';
+const SHAPE_VERSION = '6';
 
 /** A single page's content (e.g. `home`), merged over its defaults. */
 export function getSingle<K extends SingleKey>(key: K): Promise<SingleTypes[K]> {

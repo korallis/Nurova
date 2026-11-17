@@ -92,9 +92,9 @@ export function renderBrandedEmail(email: BrandedEmail): string {
 <title>${text(email.heading)}</title>
 <style>
   /* Grift, the brand font, from the website. Apple Mail and some others use it; the rest fall back (see FONT). */
-  @font-face { font-family: 'Grift'; font-weight: 400; font-style: normal; src: url('${escapeHtml(email.siteUrl)}/fonts/Grift-Regular.ttf') format('truetype'); }
-  @font-face { font-family: 'Grift'; font-weight: 500; font-style: normal; src: url('${escapeHtml(email.siteUrl)}/fonts/Grift-Medium.ttf') format('truetype'); }
-  @font-face { font-family: 'Grift'; font-weight: 700; font-style: normal; src: url('${escapeHtml(email.siteUrl)}/fonts/Grift-Bold.ttf') format('truetype'); }
+  @font-face { font-family: 'Grift'; font-weight: 400; font-style: normal; src: url('${escapeHtml(email.siteUrl)}/fonts/Grift-Regular.woff') format('woff'); }
+  @font-face { font-family: 'Grift'; font-weight: 500; font-style: normal; src: url('${escapeHtml(email.siteUrl)}/fonts/Grift-Medium.woff') format('woff'); }
+  @font-face { font-family: 'Grift'; font-weight: 700; font-style: normal; src: url('${escapeHtml(email.siteUrl)}/fonts/Grift-Bold.woff') format('woff'); }
 </style>
 </head>
 <body style="margin:0;padding:0;background:${BRAND.page};">
