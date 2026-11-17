@@ -12,12 +12,68 @@
 }
 
 @theme {
-  /* Brand palette, sampled from public/SVG (logo) and the coming-soon design */
-  --color-brand-purple: #51048A;
+  /* Brand palette, sampled from the logo files and the website designs */
+  --color-brand-purple: #6C069A;
   --color-brand-violet: #A43AE2;
+  --color-brand-lilac: #DBB0F3;
+  --color-brand-pink: #FEBCE0;
   --color-brand-magenta: #A3166E;
-  --color-brand-coral: #F45D5A;
+  --color-brand-coral: #F75658;
   --color-brand-ink: #2A0B47;
+}
+
+/*
+ * Design units, as on Muve Futures. The designs are 1920px wide; `--u` is one
+ * design pixel at the current viewport, so `u-w-354` is 354px in the design at
+ * any width (capped at 1920). Used from `xl` up to reproduce the designs'
+ * layout exactly; smaller screens use normal responsive classes.
+ */
+:root {
+  --u: calc(min(100vw, 1920px) / 1920);
+}
+
+@utility u-w-* { width: calc(var(--u) * --value(number)); }
+@utility u-h-* { height: calc(var(--u) * --value(number)); }
+@utility u-size-* { width: calc(var(--u) * --value(number)); height: calc(var(--u) * --value(number)); }
+@utility u-min-h-* { min-height: calc(var(--u) * --value(number)); }
+@utility u-min-w-* { min-width: calc(var(--u) * --value(number)); }
+@utility u-max-w-* { max-width: calc(var(--u) * --value(number)); }
+@utility u-top-* { top: calc(var(--u) * --value(number)); }
+@utility -u-top-* { top: calc(var(--u) * --value(number) * -1); }
+@utility u-left-* { left: calc(var(--u) * --value(number)); }
+@utility -u-left-* { left: calc(var(--u) * --value(number) * -1); }
+@utility u-right-* { right: calc(var(--u) * --value(number)); }
+@utility -u-right-* { right: calc(var(--u) * --value(number) * -1); }
+@utility u-bottom-* { bottom: calc(var(--u) * --value(number)); }
+@utility -u-bottom-* { bottom: calc(var(--u) * --value(number) * -1); }
+@utility u-mt-* { margin-top: calc(var(--u) * --value(number)); }
+@utility -u-mt-* { margin-top: calc(var(--u) * --value(number) * -1); }
+@utility u-mb-* { margin-bottom: calc(var(--u) * --value(number)); }
+@utility -u-mb-* { margin-bottom: calc(var(--u) * --value(number) * -1); }
+@utility u-ml-* { margin-left: calc(var(--u) * --value(number)); }
+@utility u-mr-* { margin-right: calc(var(--u) * --value(number)); }
+@utility u-p-* { padding: calc(var(--u) * --value(number)); }
+@utility u-pt-* { padding-top: calc(var(--u) * --value(number)); }
+@utility u-pb-* { padding-bottom: calc(var(--u) * --value(number)); }
+@utility u-pl-* { padding-left: calc(var(--u) * --value(number)); }
+@utility u-pr-* { padding-right: calc(var(--u) * --value(number)); }
+@utility u-px-* { padding-inline: calc(var(--u) * --value(number)); }
+@utility u-py-* { padding-block: calc(var(--u) * --value(number)); }
+@utility u-gap-* { gap: calc(var(--u) * --value(number)); }
+@utility u-gap-x-* { column-gap: calc(var(--u) * --value(number)); }
+@utility u-gap-y-* { row-gap: calc(var(--u) * --value(number)); }
+@utility u-text-* { font-size: calc(var(--u) * --value(number)); }
+@utility u-leading-* { line-height: calc(var(--u) * --value(number)); }
+@utility u-border-* { border-width: calc(var(--u) * --value(number)); }
+@utility u-rounded-* { border-radius: calc(var(--u) * --value(number)); }
+@utility u-scroll-px-* { scroll-padding-inline: calc(var(--u) * --value(number)); }
+
+/* Hide the native scrollbar while keeping the element scrollable (used by carousels). */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 html {

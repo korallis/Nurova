@@ -2,6 +2,7 @@
 
 import { motion } from 'motion/react';
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/Reveal';
+import { SOCIALS, SocialIcon } from '@/components/common/SocialLinks';
 import type { SettingsContent } from '@/lib/content/pages';
 import { cn } from '@/lib/utils';
 
@@ -70,36 +71,15 @@ export function GlassCard({ children, className }: { children: React.ReactNode; 
   );
 }
 
-const SOCIALS = [
-  { key: 'linkedin', label: 'LinkedIn', icon: '/icons/linkedin.svg' },
-  { key: 'instagram', label: 'Instagram', icon: '/icons/instagram.svg' },
-  { key: 'facebook', label: 'Facebook', icon: '/icons/facebook.svg' },
-] as const;
-
-const iconMotion = 'block transition-transform duration-300 ease-out hover:-translate-y-1 hover:scale-110 hover:-rotate-6';
-
 /** White social icons; each is only a link once its URL is set in Site settings. They pop in one after another. */
 export function SocialLinks({ socials, className }: { socials: SettingsContent['socials']; className?: string }) {
   return (
     <Stagger onLoad delay={1.1} stagger={0.1} className={cn('flex items-center gap-[17px]', className)}>
-      {SOCIALS.map(({ key, label, icon }) => {
-        // eslint-disable-next-line @next/next/no-img-element
-        const image = <img src={icon} alt="" width={38} height={38} className="h-[38px] w-[38px]" />;
-        const href = socials[key];
-        return (
-          <StaggerItem key={key} from="pop">
-            {href ? (
-              <a href={href} aria-label={label} target="_blank" rel="noopener noreferrer" className={cn('rounded-full', iconMotion, focusRing)}>
-                {image}
-              </a>
-            ) : (
-              <span aria-hidden="true" className={iconMotion}>
-                {image}
-              </span>
-            )}
-          </StaggerItem>
-        );
-      })}
+      {SOCIALS.map(({ key, label, icon }) => (
+        <StaggerItem key={key} from="pop">
+          <SocialIcon href={socials[key]} label={label} icon={icon} />
+        </StaggerItem>
+      ))}
     </Stagger>
   );
 }

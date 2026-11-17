@@ -10,8 +10,8 @@
  * Nurova needs them.
  */
 import type { Field } from './fields';
-import { DEFAULT_SETTINGS, type SettingsContent } from './pages';
-import { settingsSchema } from './schemas';
+import { DEFAULT_HOME, DEFAULT_SETTINGS, type HomeContent, type SettingsContent } from './pages';
+import { homeSchema, settingsSchema } from './schemas';
 
 interface SingleDef<T> {
   label: string;
@@ -24,6 +24,7 @@ interface SingleDef<T> {
 
 export interface SingleTypes {
   settings: SettingsContent;
+  home: HomeContent;
 }
 
 export type SingleKey = keyof SingleTypes;
@@ -31,11 +32,12 @@ export type SingleKey = keyof SingleTypes;
 export const SINGLES: { [K in SingleKey]: SingleDef<SingleTypes[K]> } = {
   settings: {
     label: 'Site settings & coming-soon page',
-    description: 'Site name, tagline, search engine text, social links and the coming-soon page.',
+    description: 'Site name, tagline, search engine text, contact details, office address, social links, footer and the coming-soon page.',
     schema: settingsSchema,
     defaults: DEFAULT_SETTINGS,
     path: '/',
   },
+  home: { label: 'Home page', description: 'Every section of the home page.', schema: homeSchema, defaults: DEFAULT_HOME, path: '/home' },
 };
 
 /** Whether `key` names an editable document. Own-property check, so names like "constructor" aren't mistaken for content. */

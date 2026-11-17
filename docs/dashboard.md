@@ -6,13 +6,14 @@ The site has a built-in dashboard at **`/admin`** for editing website content, r
 
 | In the dashboard | Where it appears |
 | --- | --- |
-| **Website content → Site settings & coming-soon page** | Site name, tagline, browser-tab title and search description, social links, the coming-soon card and form headings, and the thank-you screen shown after an enquiry |
+| **Website content → Site settings & coming-soon page** | Site name, tagline, browser-tab title and search description, phone number, office address, social links, the footer credit line, the coming-soon card and form headings, and the thank-you screen shown after an enquiry |
+| **Website content → Home page** | Every word on the home page, the assessment cards in the carousel, the journey steps and the three photos (see below) |
 | **Inbox → Enquiries** | Messages from the “Get in touch” form. Mark them open, resolved or archived, add team notes, reply by email, export as CSV |
 | **Inbox → Newsletter** | Everyone who subscribed on the thank-you screen. Export as CSV for your email tool |
 | **Admins** | Add or remove people who can sign in, choose what managers can use, change your password |
 | **Settings** (super admins) | Email notifications through Microsoft 365: an email for each enquiry (on by default once set up) and, optionally, each sign-up |
 
-Layout, colours and animations stay in code. Anything that hasn't been edited shows the site's original copy, so the site works even before the database is set up.
+Layout, colours and animations stay in code; so do the menu and footer links (`constants/navigation.ts`). Anything that hasn't been edited shows the site's original copy, so the site works even before the database is set up.
 
 ## One-time setup
 
@@ -57,9 +58,19 @@ Layout, colours and animations stay in code. Anything that hasn't been edited sh
 - **Reset to original** discards saved edits for that page.
 - **Social links:** leave a link empty until the account exists. Its icon still shows on the coming-soon page but isn't clickable.
 
+## The home page photos
+
+The home page has three photo spots, set under **Website content → Home page**: the hero, the assessment journey and “How can we help?”. The hero and “How can we help?” photos should be **cut-outs** (PNG or WebP with a transparent background): the hero photo stands on the bottom of the card and its head can rise above it, as in the design. Until a photo is chosen, the hero and “How can we help?” cards show the brand swirl, and the journey panel shows the brand gradient.
+
+Upload photos from the editor (needs Vercel Blob), or add the files to `public/images` and list them in `lib/content/photo-library.ts` so they appear under “Choose from site photos”.
+
 ## Launching the full site (developers)
 
-`/` redirects to `/coming-soon` (see `next.config.ts`). At launch, add the home page and swap the redirect, as the comment there explains. Public pages that share a header and footer go in `app/(site)/`, as on Muve Futures.
+`/` redirects to `/coming-soon` (see `next.config.ts`) and the finished home page can be previewed at **`/home`** (hidden from search engines). At launch, swap the redirect as the comment in `next.config.ts` explains, and delete `app/(site)/home`. Public pages that share the header and footer go in `app/(site)/`, as on Muve Futures; the menu and footer already link to the planned addresses (`constants/navigation.ts`).
+
+From `xl` (1280px) up, the pages follow the 1920px-wide designs exactly using design units (`u-w-354` is 354 design pixels; see `app/globals.css`). Smaller screens use normal responsive classes.
+
+The brand font is used from `public/fonts/Grift-*.woff`, web copies of the original TTFs with the TrueType hinting removed (it broke the letter M at small sizes on Windows). If the Grift files are ever replaced, run `bun run fonts:build` to rebuild them.
 
 ## Changing the content structure (developers)
 
