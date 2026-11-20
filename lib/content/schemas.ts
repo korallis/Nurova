@@ -102,3 +102,48 @@ export const homeSchema: Field = object({
     'Closing call to action'
   ),
 });
+
+export const aboutSchema: Field = object({
+  hero: object(
+    {
+      label: text('Label', { help: 'The coral label above the card.' }),
+      title: heading(),
+      body: body(),
+      image: cutOut('Photo', 'A cut-out photo standing on the bottom of the card, on the right. Its head can rise above the card.'),
+      primaryCta: text('Main button label'),
+      secondaryCta: text('“Contact Us” button label'),
+    },
+    'Hero'
+  ),
+  purpose: object({ title: heading(), body: body(), cta: text('“Our Approach” button label') }, 'Purpose, ambitions and values'),
+  pillars: list(
+    'Mission, vision and values cards',
+    object({
+      title: heading('Title'),
+      body: textarea('Text', { rows: 4, help: 'Line breaks are kept on larger screens, to fit beside the photo.' }),
+      image: cutOut('Photo', 'A cut-out photo standing in the bottom-right corner of the card.'),
+    }),
+    { itemTitle: 'title', min: 1 }
+  ),
+  team: object(
+    {
+      members: list(
+        'Team members',
+        object({
+          name: text('Name', { help: 'Shown as “Meet <name>”.' }),
+          role: text('Role'),
+          bio: textarea('Biography', { rows: 6, help: 'A line break starts a new paragraph.' }),
+          image: optional('Photo', photo('Photo'), 'Shown on the left of their card.'),
+        }),
+        { itemTitle: 'name', min: 1, help: 'One card at a time; with more than one person, visitors can step through them.' }
+      ),
+      cta: text('“Meet the Team” button label'),
+      nextLabel: text('“Next” label'),
+    },
+    'Meet the team'
+  ),
+  closing: object(
+    { title: heading(), body: body(), primaryCta: text('Main button label'), secondaryCta: text('Second button label') },
+    'Closing call to action'
+  ),
+});
