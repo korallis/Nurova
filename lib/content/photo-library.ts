@@ -17,4 +17,11 @@ export const PHOTO_LIBRARY: LibraryPhoto[] = [
   { src: '/images/home-hero.png', width: 820, height: 731, transparent: true },
   { src: '/images/home-journey.png', width: 932, height: 749, transparent: false },
   { src: '/images/home-help.png', width: 788, height: 548, transparent: true },
+  { src: '/images/about-hero.png', width: 1023, height: 796, transparent: true },
+  { src: '/images/about-mission.png', width: 472, height: 528, transparent: true },
+  { src: '/images/about-vision.png', width: 472, height: 528, transparent: true },
+  { src: '/images/about-values.png', width: 472, height: 528, transparent: true },
+  { src: '/images/team-natalie-gillbanks.png', width: 763, height: 751, transparent: false },
+  { src: '/images/team-james-bent.png', width: 763, height: 751, transparent: false },
+  { src: '/images/team-ian-southerland.png', width: 763, height: 751, transparent: false },
 ];

@@ -50,7 +50,7 @@ export function Navbar({ currentPage, siteName }: { currentPage: PageId; siteNam
   const homeLabel = `${siteName} home`;
 
   return (
-    <header className={cn('sticky top-0 z-40 w-full bg-white transition-shadow duration-300 xl:static', stuck && 'shadow-[0_6px_24px_rgba(60,0,90,0.08)] xl:shadow-none')}>
+    <header className={cn('sticky top-0 z-40 w-full bg-white transition-shadow duration-300 xl:relative', stuck && 'shadow-[0_6px_24px_rgba(60,0,90,0.08)] xl:shadow-none')}>
       <div
         ref={barRef}
         className="mx-auto flex h-20 w-[calc(100%-2.5rem)] items-center justify-between gap-4 sm:w-[calc(100%-4rem)] xl:h-auto xl:u-w-1720 xl:items-start xl:u-pt-100"

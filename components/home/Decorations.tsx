@@ -58,12 +58,12 @@ export function BrushUnderline({ className, delay = 0.6 }: StrokeProps) {
   return <DrawnStroke d={BRUSH} viewBox="0 0 490 80" color="var(--color-brand-pink)" strokeWidth={22} delay={delay} duration={1.1} className={cn('aspect-[490/80]', className)} />;
 }
 
-/** The coral spiral by the closing call to action; draws itself as the section comes into view. */
-export function Spiral({ className }: { className?: string }) {
-  return <DrawnStroke d={SPIRAL} viewBox="0 0 400 370" color="var(--color-brand-coral)" strokeWidth={28} delay={0.2} duration={1.6} className={cn('aspect-[400/370]', className)} />;
+/** The spiral by the closing call to action (coral on Home, pink on About); draws itself as the section comes into view. */
+export function Spiral({ className, color = 'var(--color-brand-coral)', opacity = 1, delay = 0.2 }: { className?: string; color?: string; opacity?: number; delay?: number }) {
+  return <DrawnStroke d={SPIRAL} viewBox="0 0 400 370" color={color} opacity={opacity} strokeWidth={28} delay={delay} duration={1.6} className={cn('aspect-[400/370]', className)} />;
 }
 
-/** The coral squiggle that runs on over the top of the footer; draws just after the spiral. */
-export function Squiggle({ className }: { className?: string }) {
-  return <DrawnStroke d={SQUIGGLE} viewBox="0 0 460 420" color="var(--color-brand-coral)" strokeWidth={28} delay={0.6} duration={1.6} className={cn('aspect-[460/420]', className)} />;
+/** The squiggle that runs on over the top of the footer; draws just after the spiral. */
+export function Squiggle({ className, color = 'var(--color-brand-coral)', opacity = 1, delay = 0.6 }: { className?: string; color?: string; opacity?: number; delay?: number }) {
+  return <DrawnStroke d={SQUIGGLE} viewBox="0 0 460 420" color={color} opacity={opacity} strokeWidth={28} delay={delay} duration={1.6} className={cn('aspect-[460/420]', className)} />;
 }
