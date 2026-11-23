@@ -8,6 +8,8 @@ import { ButtonLink } from '@/components/ui/button';
 import { BOOK_LINK, CONTACT_LINK, NAV_LINKS, type NavLinkConfig, type PageId } from '@/constants';
 import { cn } from '@/lib/utils';
 
+const subLink = 'block rounded-xl px-3 py-2.5 text-brand-purple transition-colors hover:bg-brand-violet hover:text-white';
+
 const itemVariants = { hidden: { opacity: 0, x: -16 }, shown: { opacity: 1, x: 0 } };
 
 /** A menu item, with a button that expands the pages under it. */
@@ -53,9 +55,20 @@ function MenuItem({ link, active, expanded, onToggle, onNavigate }: { link: NavL
             <ul className="mx-2 mb-2 mt-1 space-y-0.5 rounded-2xl bg-brand-violet/10 p-2">
               {link.dropdown.map((item) => (
                 <li key={item.href + item.label}>
-                  <Link href={item.href} onClick={onNavigate} className="block rounded-xl px-3 py-2.5 font-semibold text-brand-purple transition-colors hover:bg-brand-violet hover:text-white">
+                  <Link href={item.href} onClick={onNavigate} className={cn(subLink, item.bold ? 'font-bold' : 'font-semibold')}>
                     {item.label}
                   </Link>
+                  {item.children && (
+                    <ul className="pl-4 italic">
+                      {item.children.map((child) => (
+                        <li key={child.href}>
+                          <Link href={child.href} onClick={onNavigate} className={cn(subLink, 'font-medium')}>
+                            {child.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               ))}
             </ul>

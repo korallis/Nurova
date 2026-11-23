@@ -7,12 +7,37 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: '*.public.blob.vercel-storage.com' },
     ],
   },
+  // Images were reorganised into page folders (public/images/<page>/…). Content
+  // saved in the dashboard before that still uses the old flat names, so those
+  // keep working here. Remove an entry once nothing saved points at it.
+  async rewrites() {
+    const moved: Record<string, string> = {
+      'home-hero.png': 'home/hero.png',
+      'home-journey.png': 'home/journey.png',
+      'home-help.png': 'home/help.png',
+      'about-hero.png': 'about/hero.png',
+      'about-mission.png': 'about/mission.png',
+      'about-vision.png': 'about/vision.png',
+      'about-values.png': 'about/values.png',
+      'team-natalie-gillbanks.png': 'team/natalie-gillbanks.png',
+      'team-james-bent.png': 'team/james-bent.png',
+      'team-ian-southerland.png': 'team/ian-southerland.png',
+      'quality-hero.webp': 'about/quality/hero.webp',
+      'quality-governance.webp': 'about/quality/governance.webp',
+      'approach-hero.webp': 'about/approach/hero.webp',
+      'team-hero.webp': 'about/team/hero.webp',
+    };
+    return Object.entries(moved).map(([from, to]) => ({ source: `/images/${from}`, destination: `/images/${to}` }));
+  },
   async redirects() {
     return [
       // Pre-launch: the home page shows the coming-soon page. At launch, add the
       // home page (app/(site)/page.tsx) and replace this with
       // { source: '/coming-soon', destination: '/', permanent: false }.
       { source: '/', destination: '/coming-soon', permanent: false },
+      // Early home-page links, before the assessment pages were split into adults and children.
+      { source: '/assessments/adhd', destination: '/assessments', permanent: true },
+      { source: '/assessments/autism', destination: '/assessments', permanent: true },
     ];
   },
 };

@@ -46,6 +46,7 @@ interface RevealProps {
   /** Animate as soon as the page loads rather than when scrolled into view. */
   onLoad?: boolean;
   id?: string;
+  style?: React.CSSProperties;
 }
 
 /**
@@ -53,9 +54,9 @@ interface RevealProps {
  * load with `onLoad`. Put layout classes (positioning, size) on `className`:
  * the wrapper itself is what moves.
  */
-export function Reveal({ children, className, from = 'up', delay = 0, onLoad = false, id }: RevealProps) {
+export function Reveal({ children, className, from = 'up', delay = 0, onLoad = false, id, style }: RevealProps) {
   return (
-    <motion.div id={id} className={className} variants={variants(from)} custom={delay} initial="hidden" {...trigger(onLoad)}>
+    <motion.div id={id} className={className} style={style} variants={variants(from)} custom={delay} initial="hidden" {...trigger(onLoad)}>
       {children}
     </motion.div>
   );
@@ -92,12 +93,13 @@ interface StaggerItemProps {
   from?: RevealFrom;
   as?: 'div' | 'li';
   id?: string;
+  style?: React.CSSProperties;
 }
 
-export function StaggerItem({ children, className, from = 'up', as = 'div', id }: StaggerItemProps) {
+export function StaggerItem({ children, className, from = 'up', as = 'div', id, style }: StaggerItemProps) {
   const Comp = as === 'li' ? motion.li : motion.div;
   return (
-    <Comp id={id} className={className} variants={variants(from)}>
+    <Comp id={id} className={className} style={style} variants={variants(from)}>
       {children}
     </Comp>
   );

@@ -37,7 +37,7 @@ function ApproachHero({ content }: { content: ApproachContent['hero'] }) {
             </h1>
           </StaggerItem>
           <StaggerItem>
-            <p className={cn(pageText, 'mt-5 whitespace-pre-line text-brand-purple xl:u-mt-20 xl:u-max-w-790')}>{content.body}</p>
+            <p className={cn(pageText, 'mt-5 whitespace-pre-line text-brand-purple xl:u-mt-20 xl:u-max-w-760')}>{content.body}</p>
           </StaggerItem>
           <StaggerItem from="pop" className="mt-8 xl:u-mt-53">
             <ButtonLink href={ROUTES.contact} variant="violet">
@@ -47,7 +47,7 @@ function ApproachHero({ content }: { content: ApproachContent['hero'] }) {
         </Stagger>
 
         {image?.src && (
-          <Reveal onLoad from="up" delay={0.4} className="relative mx-auto mt-10 h-96 w-fit sm:h-[30rem] lg:mt-0 lg:self-end xl:absolute xl:bottom-0 xl:-u-right-10 xl:mt-0 xl:u-h-890">
+          <Reveal onLoad from="up" delay={0.4} className="pointer-events-none relative mx-auto mt-10 h-96 w-fit sm:h-[30rem] lg:mt-0 lg:self-end xl:absolute xl:bottom-0 xl:-u-right-10 xl:mt-0 xl:u-h-987">
             <Image
               src={image.src}
               alt={image.alt}

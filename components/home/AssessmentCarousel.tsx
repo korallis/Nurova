@@ -25,10 +25,16 @@ const slideVariants: Variants = {
   shown: (delay: number) => ({ opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1], delay } }),
 };
 
-function Card({ card, isClone }: { card: AssessmentCard; isClone: boolean }) {
+/** Card colours: coral on the home page, violet on the assessments overview. */
+const CARD_TONES = {
+  coral: 'bg-brand-coral hover:shadow-[0_18px_40px_rgba(247,86,88,0.35)]',
+  violet: 'bg-brand-violet hover:shadow-[0_18px_40px_rgba(164,58,226,0.35)]',
+} as const;
+
+function Card({ card, isClone, tone }: { card: AssessmentCard; isClone: boolean; tone: keyof typeof CARD_TONES }) {
   const title = card.title.replace(/\s*\n\s*/g, ' ');
   return (
-    <article className="group relative flex h-full min-h-[22rem] w-full flex-col rounded-[1.75rem] bg-brand-coral p-7 text-white transition duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_18px_40px_rgba(247,86,88,0.35)] sm:min-h-[25rem] xl:u-min-h-580 xl:u-rounded-30 xl:u-p-46 xl:u-pt-50">
+    <article className={cn(CARD_TONES[tone], 'group relative flex h-full min-h-[22rem] w-full flex-col rounded-[1.75rem] p-7 text-white transition duration-300 ease-out hover:-translate-y-1.5 sm:min-h-[25rem] xl:u-min-h-580 xl:u-rounded-30 xl:u-p-46 xl:u-pt-50')}>
       <h3 className="text-[1.85rem] font-bold leading-[1.05] xl:u-text-50 xl:u-leading-50">
         <MultiLine text={card.title} always />
       </h3>
@@ -49,7 +55,17 @@ function Card({ card, isClone }: { card: AssessmentCard; isClone: boolean }) {
   );
 }
 
-export function AssessmentCarousel({ cards }: { cards: AssessmentCard[] }) {
+export function AssessmentCarousel({
+  cards,
+  tone = 'coral',
+  label = 'Our assessments',
+  className = 'mt-12 sm:mt-16 xl:u-mt-24',
+}: {
+  cards: AssessmentCard[];
+  tone?: keyof typeof CARD_TONES;
+  label?: string;
+  className?: string;
+}) {
   const n = cards.length;
   const loop = n > 1;
   const slides = loop ? Array.from({ length: COPIES }, () => cards).flat() : cards;
@@ -139,7 +155,7 @@ export function AssessmentCarousel({ cards }: { cards: AssessmentCard[] }) {
   const onScreen = (card: number) => (card - first + n) % n < visible;
 
   return (
-    <section aria-label="Our assessments" className="mt-12 sm:mt-16 xl:u-mt-24">
+    <section aria-label={label} className={className}>
       <motion.div initial="hidden" whileInView="shown" viewport={{ once: true, amount: 0.2 }}>
         <div
           ref={trackRef}
@@ -170,7 +186,7 @@ export function AssessmentCarousel({ cards }: { cards: AssessmentCard[] }) {
                 custom={position >= 0 && position < 3 ? 0.1 + position * 0.12 : 0}
                 className="flex w-[82%] shrink-0 snap-start sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)] xl:u-w-471"
               >
-                <Card card={card} isClone={isClone} />
+                <Card card={card} isClone={isClone} tone={tone} />
               </motion.div>
             );
           })}
