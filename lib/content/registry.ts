@@ -10,8 +10,21 @@
  * Nurova needs them.
  */
 import type { Field } from './fields';
-import { DEFAULT_ABOUT, DEFAULT_HOME, DEFAULT_SETTINGS, type AboutContent, type HomeContent, type SettingsContent } from './pages';
-import { aboutSchema, homeSchema, settingsSchema } from './schemas';
+import {
+  DEFAULT_ABOUT,
+  DEFAULT_APPROACH,
+  DEFAULT_HOME,
+  DEFAULT_QUALITY,
+  DEFAULT_SETTINGS,
+  DEFAULT_TEAM_PAGE,
+  type AboutContent,
+  type ApproachContent,
+  type HomeContent,
+  type QualityContent,
+  type SettingsContent,
+  type TeamPageContent,
+} from './pages';
+import { aboutSchema, approachSchema, homeSchema, qualitySchema, settingsSchema, teamPageSchema } from './schemas';
 
 interface SingleDef<T> {
   label: string;
@@ -26,6 +39,9 @@ export interface SingleTypes {
   settings: SettingsContent;
   home: HomeContent;
   about: AboutContent;
+  quality: QualityContent;
+  approach: ApproachContent;
+  'team-page': TeamPageContent;
 }
 
 export type SingleKey = keyof SingleTypes;
@@ -40,6 +56,21 @@ export const SINGLES: { [K in SingleKey]: SingleDef<SingleTypes[K]> } = {
   },
   home: { label: 'Home page', description: 'Every section of the home page.', schema: homeSchema, defaults: DEFAULT_HOME, path: '/home' },
   about: { label: 'About page', description: 'Hero, purpose, mission, vision and values, the team and the closing call to action.', schema: aboutSchema, defaults: DEFAULT_ABOUT, path: '/about' },
+  quality: {
+    label: 'About › Quality & clinical standards',
+    description: 'The hero and the clinical governance section.',
+    schema: qualitySchema,
+    defaults: DEFAULT_QUALITY,
+    path: '/about/quality-and-clinical-standards',
+  },
+  approach: { label: 'About › Our approach', description: 'The hero and the three steps.', schema: approachSchema, defaults: DEFAULT_APPROACH, path: '/about/our-approach' },
+  'team-page': {
+    label: 'About › Meet the team',
+    description: 'The hero and closing call to action. The people themselves are edited on the About page.',
+    schema: teamPageSchema,
+    defaults: DEFAULT_TEAM_PAGE,
+    path: '/about/team',
+  },
 };
 
 /** Whether `key` names an editable document. Own-property check, so names like "constructor" aren't mistaken for content. */

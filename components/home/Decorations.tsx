@@ -48,9 +48,9 @@ function DrawnStroke({ d, viewBox, color, opacity = 1, strokeWidth, delay = 0, d
 }
 
 /** The translucent white swirl behind the photos. Size the box with `className` (its aspect ratio is fixed). */
-export function Swirl({ className, strokeWidth = 28, delay = 0.5, opacity = 0.32 }: StrokeProps & { opacity?: number }) {
+export function Swirl({ className, strokeWidth = 28, delay = 0.5, opacity = 0.32, color = '#fff' }: StrokeProps & { opacity?: number; color?: string }) {
   return (
-    <DrawnStroke d={SWIRL} viewBox="0 0 940 660" color="#fff" opacity={opacity} strokeWidth={strokeWidth} delay={delay} duration={2.4} className={cn('aspect-[940/660]', className)} />
+    <DrawnStroke d={SWIRL} viewBox="0 0 940 660" color={color} opacity={opacity} strokeWidth={strokeWidth} delay={delay} duration={2.4} className={cn('aspect-[940/660]', className)} />
   );
 }
 
@@ -66,4 +66,16 @@ export function Spiral({ className, color = 'var(--color-brand-coral)', opacity 
 /** The squiggle that runs on over the top of the footer; draws just after the spiral. */
 export function Squiggle({ className, color = 'var(--color-brand-coral)', opacity = 1, delay = 0.6 }: { className?: string; color?: string; opacity?: number; delay?: number }) {
   return <DrawnStroke d={SQUIGGLE} viewBox="0 0 460 420" color={color} opacity={opacity} strokeWidth={28} delay={delay} duration={1.6} className={cn('aspect-[460/420]', className)} />;
+}
+
+/** The two coral waves by the Meet the Team page's closing call to action. */
+const WAVE_LEFT = 'M 125 20 C 70 55, 25 100, 20 160 C 15 215, 60 240, 120 230 C 170 222, 200 180, 255 172 C 300 166, 300 215, 285 255 C 268 300, 270 350, 330 365 C 370 375, 410 362, 440 348';
+const WAVE_RIGHT = 'M 550 70 C 510 45, 470 22, 420 22 C 380 22, 365 70, 370 130 C 375 190, 400 250, 408 310 C 415 370, 395 420, 350 450 C 300 480, 230 492, 170 485 C 120 480, 70 460, 25 432';
+
+export function WaveLeft({ className, color = 'var(--color-brand-coral)' }: { className?: string; color?: string }) {
+  return <DrawnStroke d={WAVE_LEFT} viewBox="0 0 460 400" color={color} strokeWidth={28} delay={0.2} duration={1.6} className={cn('aspect-[460/400]', className)} />;
+}
+
+export function WaveRight({ className, color = 'var(--color-brand-coral)' }: { className?: string; color?: string }) {
+  return <DrawnStroke d={WAVE_RIGHT} viewBox="0 0 580 520" color={color} strokeWidth={28} delay={0.6} duration={1.8} className={cn('aspect-[580/520]', className)} />;
 }

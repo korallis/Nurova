@@ -147,3 +147,65 @@ export const aboutSchema: Field = object({
     'Closing call to action'
   ),
 });
+
+const closingSchema = object(
+  { title: heading(), body: body(), primaryCta: text('Main button label'), secondaryCta: text('Second button label') },
+  'Closing call to action'
+);
+
+export const qualitySchema: Field = object({
+  hero: object(
+    {
+      label: text('Label', { help: 'The coral label above the card.' }),
+      title: heading(),
+      body: body(),
+      image: optional('Photo', photo('Photo'), 'Fills the card behind the frosted panel.'),
+      primaryCta: text('“View Our Policies” button label'),
+      secondaryCta: text('“Chat to Us” button label'),
+    },
+    'Hero'
+  ),
+  governance: object(
+    { title: heading(), body: body(), image: optional('Photo', photo('Photo'), 'Shown on the right.'), cta: text('Button label') },
+    'Clinical governance'
+  ),
+  closing: closingSchema,
+});
+
+export const approachSchema: Field = object({
+  hero: object(
+    {
+      label: text('Label', { help: 'The coral label above the heading.' }),
+      title: heading(),
+      body: textarea('Text', { rows: 6, help: 'Leave a blank line between paragraphs.' }),
+      image: cutOut('Photo', 'A cut-out photo on the right.'),
+      cta: text('Button label'),
+    },
+    'Hero'
+  ),
+  steps: list(
+    'Steps',
+    object({
+      label: text('Label', { placeholder: 'Step 1' }),
+      title: heading('Title'),
+      body: textarea('Text', { rows: 3, help: 'Line breaks are kept on larger screens.' }),
+    }),
+    { itemTitle: 'label', min: 1 }
+  ),
+  closing: closingSchema,
+});
+
+export const teamPageSchema: Field = object({
+  hero: object(
+    {
+      label: text('Label', { help: 'The coral label above the card.' }),
+      title: heading(),
+      body: body(),
+      image: optional('Photo', photo('Photo'), 'Fills the card, under a violet tint.'),
+      cta: text('Button label'),
+    },
+    'Hero',
+    'The team members themselves are edited on the About page.'
+  ),
+  closing: closingSchema,
+});
