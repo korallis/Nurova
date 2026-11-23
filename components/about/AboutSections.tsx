@@ -14,7 +14,7 @@ export function AboutSections({ content }: { content: AboutContent }) {
       <PurposeSection content={content.purpose} />
       <PillarCards pillars={content.pillars} />
       <TeamSection content={content.team} />
-      <ClosingCta content={content.closing} tone="purple" />
+      <ClosingCta content={content.closing} variant="about" />
     </div>
   );
 }

@@ -9,6 +9,7 @@ import { container, gradient } from '@/components/home/homeStyles';
 import { ROUTES } from '@/constants';
 import type { AboutContent } from '@/lib/content/pages';
 import { cn } from '@/lib/utils';
+import { PageLabel } from './PageLabel';
 
 /**
  * The coral label, then "We're here to help people understand themselves."
@@ -21,9 +22,7 @@ export function AboutHero({ content }: { content: AboutContent['hero'] }) {
 
   return (
     <section aria-labelledby="about-heading" className={cn(container, 'mt-4 xl:u-mt-124')}>
-      <Reveal onLoad from="left">
-        <p className="inline-flex h-11 items-center rounded-full bg-brand-coral px-5 text-base font-bold text-white xl:u-h-62 xl:u-px-24 xl:u-text-30">{content.label}</p>
-      </Reveal>
+      <PageLabel>{content.label}</PageLabel>
 
       <Reveal onLoad from="zoom" delay={0.1} className="relative mt-5 xl:u-mt-37">
         <div className="relative isolate overflow-hidden rounded-[2rem] text-white xl:u-rounded-50 xl:u-h-762">

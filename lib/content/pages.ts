@@ -292,3 +292,118 @@ export const DEFAULT_ABOUT: AboutContent = {
     secondaryCta: 'Contact Us',
   },
 };
+
+// ── About › Quality & clinical standards ──────────────────────────────────
+
+export interface QualityContent {
+  hero: {
+    label: string;
+    title: string;
+    body: string;
+    /** Fills the card behind the frosted panel. */
+    image: Photo | null;
+    primaryCta: string;
+    secondaryCta: string;
+  };
+  governance: { title: string; body: string; image: Photo | null; cta: string };
+  closing: { title: string; body: string; primaryCta: string; secondaryCta: string };
+}
+
+export const DEFAULT_QUALITY: QualityContent = {
+  hero: {
+    label: 'Quality & Clinical Standards',
+    title: 'Clinical excellence you can trust.',
+    body: 'Our commitment to quality underpins every assessment and support pathway.',
+    image: null,
+    primaryCta: 'View Our Policies',
+    secondaryCta: 'Chat to Us',
+  },
+  governance: {
+    title: 'Clinical governance\n& quality assurance',
+    body: 'Clinical supervision, quality assurance, continuing professional development, peer review, safeguarding, confidentiality and recognised assessment frameworks.',
+    image: null,
+    cta: 'Speak to a Specialist',
+  },
+  closing: {
+    title: 'Ready to take\nthe next step?',
+    body: 'Contact Nurova Minds for guidance and support.',
+    primaryCta: 'Book an Assessment',
+    secondaryCta: 'Contact Us',
+  },
+};
+
+// ── About › Our approach ───────────────────────────────────────────────────
+
+export interface ApproachStep {
+  /** e.g. "Step 1". */
+  label: string;
+  title: string;
+  body: string;
+}
+
+export interface ApproachContent {
+  hero: {
+    label: string;
+    title: string;
+    /** A blank line starts a new paragraph. */
+    body: string;
+    /** A cut-out photo on the right. */
+    image: Photo | null;
+    cta: string;
+  };
+  steps: ApproachStep[];
+  closing: { title: string; body: string; primaryCta: string; secondaryCta: string };
+}
+
+export const DEFAULT_APPROACH: ApproachContent = {
+  hero: {
+    label: 'Our Approach',
+    title: 'Understanding first.\nSupport always.',
+    body:
+      'We explain what to expect before, during and after your assessment. Tell us what would help you take part.\n\nWe offer different ways to communicate, clear information and spaces that take sensory needs into account. You can ask for reasonable adjustments at any stage of your assessment.',
+    image: null,
+    cta: 'Speak to a Specialist',
+  },
+  steps: [
+    { label: 'Step 1', title: 'We listen.', body: 'We take time to hear about your experiences.' },
+    { label: 'Step 2', title: 'We talk\nthrough your\nresults.', body: 'We go over the results\nwith you.' },
+    { label: 'Step 3', title: 'We explain\nwhat they\nmean.', body: 'We explain what the findings\nmean for you.' },
+  ],
+  closing: {
+    title: 'Ready to take\nthe next step?',
+    body: 'Contact Nurova Minds for guidance and support.',
+    primaryCta: 'Book an Assessment',
+    secondaryCta: 'Contact Us',
+  },
+};
+
+// ── About › Meet the team ──────────────────────────────────────────────────
+
+/** The people themselves are edited on the About page (team members), so both pages stay in step. */
+export interface TeamPageContent {
+  hero: {
+    label: string;
+    title: string;
+    body: string;
+    /** Fills the card, under a violet tint. */
+    image: Photo | null;
+    cta: string;
+  };
+  closing: { title: string; body: string; primaryCta: string; secondaryCta: string };
+}
+
+export const DEFAULT_TEAM_PAGE: TeamPageContent = {
+  hero: {
+    label: 'Meet the Team',
+    title: 'Experienced professionals.\nCompassionate care.',
+    body: 'Our multidisciplinary team brings together expertise in neurodevelopmental assessment, psychology, mental health and therapeutic support.',
+    image: null,
+    cta: 'Speak to a Specialist',
+  },
+  closing: {
+    title: 'Your journey to understanding\nstarts here.',
+    body: 'Whether you’re seeking answers for yourself, your child or someone you support, our team is here to help.',
+    primaryCta: 'Book an Assessment',
+    secondaryCta: 'Speak to a Specialist',
+  },
+};

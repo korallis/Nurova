@@ -7,6 +7,7 @@ export const ROUTES = {
   about: '/about',
   team: '/about/team',
   ourApproach: '/about/our-approach',
+  quality: '/about/quality-and-clinical-standards',
   assessments: '/assessments',
   adhdAssessment: '/assessments/adhd',
   autismAssessment: '/assessments/autism',
@@ -18,6 +19,7 @@ export const ROUTES = {
   professionals: '/for-professionals',
   resources: '/resources',
   faqs: '/resources/faqs',
+  policies: '/resources/policies-and-procedures',
   contact: '/contact',
   book: '/book-an-assessment',
   referrerPortal: '/referrer-portal',
@@ -55,7 +57,7 @@ export const NAV_LINKS: NavLinkConfig[] = [
       { label: 'About Nurova Minds', href: ROUTES.about },
       { label: 'Meet the Team', href: ROUTES.team },
       { label: 'Our Approach', href: ROUTES.ourApproach },
-      { label: 'Quality & Clinical Standards', href: '/about/quality-and-clinical-standards' },
+      { label: 'Quality & Clinical Standards', href: ROUTES.quality },
     ],
   },
   {
@@ -109,7 +111,7 @@ export const NAV_LINKS: NavLinkConfig[] = [
     href: ROUTES.resources,
     dropdown: [
       { label: 'FAQs', href: ROUTES.faqs },
-      { label: 'Policies & Procedures', href: '/resources/policies-and-procedures' },
+      { label: 'Policies & Procedures', href: ROUTES.policies },
       { label: 'Case Studies & Impact', href: '/resources/case-studies' },
       { label: 'Accessibility', href: ROUTES.accessibility },
     ],
