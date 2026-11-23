@@ -51,6 +51,7 @@
 @utility u-mb-* { margin-bottom: calc(var(--u) * --value(number)); }
 @utility -u-mb-* { margin-bottom: calc(var(--u) * --value(number) * -1); }
 @utility u-ml-* { margin-left: calc(var(--u) * --value(number)); }
+@utility -u-ml-* { margin-left: calc(var(--u) * --value(number) * -1); }
 @utility u-mr-* { margin-right: calc(var(--u) * --value(number)); }
 @utility u-p-* { padding: calc(var(--u) * --value(number)); }
 @utility u-pt-* { padding-top: calc(var(--u) * --value(number)); }

@@ -17,11 +17,21 @@ import { PageLabel } from './PageLabel';
  * text follows and the swirl draws itself. The cut-out photo (set in the
  * dashboard) stands on the bottom of the card; from `xl` up its head rises above it.
  */
-export function AboutHero({ content }: { content: AboutContent['hero'] }) {
+export function AboutHero({
+  content,
+  primaryHref = ROUTES.book,
+  secondaryHref = ROUTES.contact,
+  headingId = 'about-heading',
+}: {
+  content: Pick<AboutContent['hero'], 'label' | 'title' | 'body' | 'image' | 'primaryCta' | 'secondaryCta'>;
+  primaryHref?: string;
+  secondaryHref?: string;
+  headingId?: string;
+}) {
   const { image } = content;
 
   return (
-    <section aria-labelledby="about-heading" className={cn(container, 'mt-4 xl:u-mt-124')}>
+    <section aria-labelledby={headingId} className={cn(container, 'mt-4 xl:u-mt-124')}>
       <PageLabel>{content.label}</PageLabel>
 
       <Reveal onLoad from="zoom" delay={0.1} className="relative mt-5 xl:u-mt-37">
@@ -31,7 +41,7 @@ export function AboutHero({ content }: { content: AboutContent['hero'] }) {
 
           <Stagger onLoad delay={0.4} stagger={0.15} className="relative px-7 pb-10 pt-12 sm:px-12 sm:pb-14 sm:pt-16 xl:u-max-w-1200 xl:u-pl-100 xl:u-pr-0 xl:u-pt-77 xl:u-pb-0">
             <StaggerItem>
-              <h1 id="about-heading" className="text-[2.4rem] font-bold leading-[1.05] sm:text-6xl xl:u-text-90 xl:u-leading-115">
+              <h1 id={headingId} className="text-[2.4rem] font-bold leading-[1.05] sm:text-6xl xl:u-text-90 xl:u-leading-115">
                 <MultiLine text={content.title} />
               </h1>
             </StaggerItem>
@@ -39,10 +49,10 @@ export function AboutHero({ content }: { content: AboutContent['hero'] }) {
               <p className="mt-5 max-w-xl text-base leading-relaxed sm:text-xl sm:leading-relaxed xl:u-mt-24 xl:u-max-w-640 xl:u-text-30 xl:u-leading-45">{content.body}</p>
             </StaggerItem>
             <StaggerItem className="mt-8 flex flex-wrap gap-3 xl:u-mt-61 xl:u-gap-24">
-              <ButtonLink href={ROUTES.book} variant="whitePurple">
+              <ButtonLink href={primaryHref} variant="whitePurple">
                 {content.primaryCta}
               </ButtonLink>
-              <ButtonLink href={ROUTES.contact} variant="outlineWhite">
+              <ButtonLink href={secondaryHref} variant="outlineWhite">
                 {content.secondaryCta}
               </ButtonLink>
             </StaggerItem>

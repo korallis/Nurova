@@ -118,7 +118,7 @@ export const DEFAULT_HOME: HomeContent = {
     title: 'Clarity starts here.',
     body:
       'Looking for an ADHD or autism assessment for yourself or someone you support? Nurova Minds assesses children, young people and adults. We explain what happens at each step and help you understand your options after the assessment.',
-    image: { src: '/images/home-hero.png', alt: 'A young man with curly hair, laughing', width: 820, height: 731 },
+    image: { src: '/images/home/hero.png', alt: 'A young man with curly hair, laughing', width: 820, height: 731 },
     primaryCta: 'Book an Assessment',
     secondaryCta: 'For Professionals',
   },
@@ -132,12 +132,12 @@ export const DEFAULT_HOME: HomeContent = {
     {
       title: 'ADHD\nAssessments',
       body: 'Comprehensive assessments for children, young people and adults delivered by experienced clinicians using evidence-based diagnostic frameworks.',
-      href: ROUTES.adhdAssessment,
+      href: ROUTES.assessments,
     },
     {
       title: 'Autism\nAssessments',
       body: 'Thoughtful, person-centred Autism assessments that recognise every individual’s unique strengths, experiences and support needs.',
-      href: ROUTES.autismAssessment,
+      href: ROUTES.assessments,
     },
     {
       title: 'Hybrid\nADHD & Autism\nAssessments',
@@ -170,7 +170,7 @@ export const DEFAULT_HOME: HomeContent = {
       'Meet your clinician.',
       'Get feedback and practical next steps.',
     ],
-    image: { src: '/images/home-journey.png', alt: 'A mother and two children playing with a wooden puzzle on the sofa', width: 932, height: 749 },
+    image: { src: '/images/home/journey.png', alt: 'A mother and two children playing with a wooden puzzle on the sofa', width: 932, height: 749 },
     cta: 'Book an Assessment',
     linkLabel: 'Learn More',
   },
@@ -179,7 +179,7 @@ export const DEFAULT_HOME: HomeContent = {
     subtitle: 'Paying for an assessment?',
     body:
       'You can book online for yourself or someone you support. Working for an NHS trust or integrated care board? Visit our professionals page to discuss assessment pathways.',
-    image: { src: '/images/home-help.png', alt: 'A smiling young woman in a yellow beanie, resting her chin on her hands', width: 788, height: 548 },
+    image: { src: '/images/home/help.png', alt: 'A smiling young woman in a yellow beanie, resting her chin on her hands', width: 788, height: 548 },
     primaryCta: 'Book an Assessment',
     secondaryCta: 'For Professionals',
   },
@@ -244,7 +244,7 @@ export const DEFAULT_ABOUT: AboutContent = {
     title: 'We’re here to help people\nunderstand themselves.',
     body:
       'Nurova Minds exists to provide compassionate, evidence-based neurodevelopmental assessments and ongoing support that empowers people to move forward with confidence.',
-    image: { src: '/images/about-hero.png', alt: 'A smiling woman in a pink jumper, pointing', width: 1023, height: 796 },
+    image: { src: '/images/about/hero.png', alt: 'A smiling woman in a pink jumper, pointing', width: 1023, height: 796 },
     primaryCta: 'Book an Assessment',
     secondaryCta: 'Contact Us',
   },
@@ -254,9 +254,9 @@ export const DEFAULT_ABOUT: AboutContent = {
     cta: 'Our Approach',
   },
   pillars: [
-    { title: 'Our\nmission', body: 'is to make\nhigh-quality\nassessments\neasier to\naccess.', image: { src: '/images/about-mission.png', alt: 'A smiling young man making an OK sign', width: 472, height: 528 } },
-    { title: 'Our\nvision', body: 'is for people to\ngain a clearer\nunderstanding of\ntheir needs and\nget the right\nsupport when\nthey need it.', image: { src: '/images/about-vision.png', alt: 'A laughing woman holding her glasses', width: 472, height: 528 } },
-    { title: 'Our\nvalues', body: 'are compassion,\nclarity, excellence,\ncollaboration and\nempowerment.', image: { src: '/images/about-values.png', alt: 'A smiling man making a heart shape with his hands', width: 472, height: 528 } },
+    { title: 'Our\nmission', body: 'is to make\nhigh-quality\nassessments\neasier to\naccess.', image: { src: '/images/about/mission.png', alt: 'A smiling young man making an OK sign', width: 472, height: 528 } },
+    { title: 'Our\nvision', body: 'is for people to\ngain a clearer\nunderstanding of\ntheir needs and\nget the right\nsupport when\nthey need it.', image: { src: '/images/about/vision.png', alt: 'A laughing woman holding her glasses', width: 472, height: 528 } },
+    { title: 'Our\nvalues', body: 'are compassion,\nclarity, excellence,\ncollaboration and\nempowerment.', image: { src: '/images/about/values.png', alt: 'A smiling man making a heart shape with his hands', width: 472, height: 528 } },
   ],
   team: {
     members: [
@@ -265,21 +265,21 @@ export const DEFAULT_ABOUT: AboutContent = {
         role: 'Clinical Director, Nurova',
         bio:
           'Natalie is a Consultant Counselling Psychologist with experience supporting neurodivergent people and people with complex mental health needs. She brings clinical expertise into how we design and deliver services at Nurova Minds, with a focus on making care evidence-based, compassionate and responsive to what each person needs.',
-        image: { src: '/images/team-natalie-gillbanks.png', alt: 'Dr. Natalie Gillbanks', width: 763, height: 751 },
+        image: { src: '/images/team/natalie-gillbanks.png', alt: 'Dr. Natalie Gillbanks', width: 763, height: 751 },
       },
       {
         name: 'James Bent',
         role: 'Clinical Recruiter, Nurova',
         bio:
           'James brings over a decade of healthcare recruitment experience to Nurova Minds, including nearly eight years as a Recruitment Manager. He now focuses on connecting clinicians with opportunities in ADHD, autism and wider neurodevelopmental services.\nJames helps build the clinical teams behind our assessments, bringing in people with the right expertise to support individuals and families seeking answers.',
-        image: { src: '/images/team-james-bent.png', alt: 'James Bent', width: 763, height: 751 },
+        image: { src: '/images/team/james-bent.png', alt: 'James Bent', width: 763, height: 751 },
       },
       {
         name: 'Ian Southerland',
         role: 'Managing Director, Nurova',
         bio:
           'Ian leads Nurova Minds and brings more than 11 years of healthcare leadership experience from Bupa UK. As Operations Director, he led primary care and mental health services across 120 clinics.\nAt Nurova Minds, Ian draws on that experience to shape how our services develop and grow, with a focus on making high-quality assessments easier to access so people can get the answers and support they need sooner.',
-        image: { src: '/images/team-ian-southerland.png', alt: 'Ian Southerland', width: 763, height: 751 },
+        image: { src: '/images/team/ian-southerland.png', alt: 'Ian Southerland', width: 763, height: 751 },
       },
     ],
     cta: 'Meet the Team',
@@ -314,14 +314,14 @@ export const DEFAULT_QUALITY: QualityContent = {
     label: 'Quality & Clinical Standards',
     title: 'Clinical excellence you can trust.',
     body: 'Our commitment to quality underpins every assessment and support pathway.',
-    image: null,
+    image: { src: '/images/about/quality/hero.webp', alt: 'Colleagues smiling and sharing a high five', width: 2560, height: 1134 },
     primaryCta: 'View Our Policies',
     secondaryCta: 'Chat to Us',
   },
   governance: {
     title: 'Clinical governance\n& quality assurance',
     body: 'Clinical supervision, quality assurance, continuing professional development, peer review, safeguarding, confidentiality and recognised assessment frameworks.',
-    image: null,
+    image: { src: '/images/about/quality/governance.webp', alt: 'A young person laughing while holding a sheet of paper', width: 1500, height: 1290 },
     cta: 'Speak to a Specialist',
   },
   closing: {
@@ -361,7 +361,7 @@ export const DEFAULT_APPROACH: ApproachContent = {
     title: 'Understanding first.\nSupport always.',
     body:
       'We explain what to expect before, during and after your assessment. Tell us what would help you take part.\n\nWe offer different ways to communicate, clear information and spaces that take sensory needs into account. You can ask for reasonable adjustments at any stage of your assessment.',
-    image: null,
+    image: { src: '/images/about/approach/hero.webp', alt: 'A woman celebrating with clenched fists', width: 2000, height: 1659 },
     cta: 'Speak to a Specialist',
   },
   steps: [
@@ -397,7 +397,7 @@ export const DEFAULT_TEAM_PAGE: TeamPageContent = {
     label: 'Meet the Team',
     title: 'Experienced professionals.\nCompassionate care.',
     body: 'Our multidisciplinary team brings together expertise in neurodevelopmental assessment, psychology, mental health and therapeutic support.',
-    image: null,
+    image: { src: '/images/about/team/hero.webp', alt: 'A clinician taking notes during a session', width: 2560, height: 1192 },
     cta: 'Speak to a Specialist',
   },
   closing: {

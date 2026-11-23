@@ -5,13 +5,32 @@ import Link from 'next/link';
 import { AnimatePresence, motion } from 'motion/react';
 import { Stagger, StaggerItem } from '@/components/motion/Reveal';
 import { ButtonLink } from '@/components/ui/button';
-import { BOOK_LINK, CONTACT_LINK, NAV_LINKS, type NavLinkConfig, type PageId } from '@/constants';
+import { BOOK_LINK, CONTACT_LINK, NAV_LINKS, type NavItem, type NavLinkConfig, type PageId } from '@/constants';
 import { cn } from '@/lib/utils';
 
 /** Long enough for the pointer to travel from a menu item into its dropdown. */
 const CLOSE_DELAY_MS = 160;
 
-/** The violet card listing an item's pages (no title: the menu item above it already names the section). */
+const itemClass =
+  'block whitespace-nowrap rounded underline-offset-4 transition-opacity hover:underline hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white xl:u-text-19 xl:u-leading-26';
+
+/** A dropdown's links; pages under a page are indented and in italics. */
+function DropdownList({ items, onNavigate, nested = false }: { items: NavItem[]; onNavigate: () => void; nested?: boolean }) {
+  return (
+    <ul className={cn(nested && 'pl-4 italic xl:u-pl-18')}>
+      {items.map((item) => (
+        <li key={item.href + item.label}>
+          <Link href={item.href} onClick={onNavigate} className={cn(itemClass, item.bold && 'font-bold')}>
+            {item.label}
+          </Link>
+          {item.children && <DropdownList items={item.children} onNavigate={onNavigate} nested />}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/** The violet card listing an item's pages. */
 function Dropdown({ link, align, onNavigate }: { link: NavLinkConfig; align: 'left' | 'right'; onNavigate: () => void }) {
   return (
     <motion.div
@@ -24,19 +43,7 @@ function Dropdown({ link, align, onNavigate }: { link: NavLinkConfig; align: 'le
       className={cn('absolute top-full z-50 pt-3 xl:u-pt-12', align === 'right' ? 'right-0 origin-top-right' : 'left-0 origin-top-left')}
     >
       <div className="rounded-[1.25rem] bg-brand-violet text-white shadow-[0_18px_40px_rgba(108,6,154,0.28)] xl:u-min-w-300 xl:u-rounded-28 xl:u-px-28 xl:u-py-24">
-        <ul>
-          {link.dropdown!.map((item) => (
-            <li key={item.href + item.label}>
-              <Link
-                href={item.href}
-                onClick={onNavigate}
-                className="block whitespace-nowrap rounded underline-offset-4 transition-opacity hover:underline hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white xl:u-text-19 xl:u-leading-26"
-              >
-                {item.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <DropdownList items={link.dropdown!} onNavigate={onNavigate} />
       </div>
     </motion.div>
   );

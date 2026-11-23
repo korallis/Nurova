@@ -25,6 +25,20 @@ import {
   type TeamPageContent,
 } from './pages';
 import { aboutSchema, approachSchema, homeSchema, qualitySchema, settingsSchema, teamPageSchema } from './schemas';
+import {
+  DEFAULT_ADULT_ADHD,
+  DEFAULT_ADULT_AUTISM,
+  DEFAULT_ADULTS_HUB,
+  DEFAULT_ASSESSMENTS_OVERVIEW,
+  DEFAULT_CHILD_ADHD,
+  DEFAULT_CHILD_AUTISM,
+  DEFAULT_CHILDREN_HUB,
+  DEFAULT_COMBINED,
+  type AssessmentHubContent,
+  type AssessmentPageContent,
+  type AssessmentsOverviewContent,
+} from './assessments';
+import { assessmentHubSchema, assessmentPageSchema, assessmentsOverviewSchema } from './assessment-schemas';
 
 interface SingleDef<T> {
   label: string;
@@ -42,7 +56,18 @@ export interface SingleTypes {
   quality: QualityContent;
   approach: ApproachContent;
   'team-page': TeamPageContent;
+  assessments: AssessmentsOverviewContent;
+  'assessments-adults': AssessmentHubContent;
+  'assessments-children': AssessmentHubContent;
+  'assessment-adult-adhd': AssessmentPageContent;
+  'assessment-adult-autism': AssessmentPageContent;
+  'assessment-child-adhd': AssessmentPageContent;
+  'assessment-child-autism': AssessmentPageContent;
+  'assessment-combined': AssessmentPageContent;
 }
+
+/** The five pages that share the assessment template. */
+export type AssessmentPageKey = 'assessment-adult-adhd' | 'assessment-adult-autism' | 'assessment-child-adhd' | 'assessment-child-autism' | 'assessment-combined';
 
 export type SingleKey = keyof SingleTypes;
 
@@ -71,6 +96,20 @@ export const SINGLES: { [K in SingleKey]: SingleDef<SingleTypes[K]> } = {
     defaults: DEFAULT_TEAM_PAGE,
     path: '/about/team',
   },
+  assessments: {
+    label: 'Assessments overview',
+    description: 'The /assessments page: hero, finder, cards, what happens and professional enquiries.',
+    schema: assessmentsOverviewSchema,
+    defaults: DEFAULT_ASSESSMENTS_OVERVIEW,
+    path: '/assessments',
+  },
+  'assessments-adults': { label: 'Assessments › Adults', description: 'The adult assessments page.', schema: assessmentHubSchema, defaults: DEFAULT_ADULTS_HUB, path: '/assessments/adults' },
+  'assessments-children': { label: 'Assessments › Children', description: 'The children assessments page.', schema: assessmentHubSchema, defaults: DEFAULT_CHILDREN_HUB, path: '/assessments/children' },
+  'assessment-adult-adhd': { label: 'Assessments › Adult ADHD', description: 'Every section of the page.', schema: assessmentPageSchema, defaults: DEFAULT_ADULT_ADHD, path: '/assessments/adults/adhd' },
+  'assessment-adult-autism': { label: 'Assessments › Adult autism', description: 'Every section of the page.', schema: assessmentPageSchema, defaults: DEFAULT_ADULT_AUTISM, path: '/assessments/adults/autism' },
+  'assessment-child-adhd': { label: 'Assessments › Child ADHD', description: 'Every section of the page.', schema: assessmentPageSchema, defaults: DEFAULT_CHILD_ADHD, path: '/assessments/children/adhd' },
+  'assessment-child-autism': { label: 'Assessments › Child autism', description: 'Every section of the page.', schema: assessmentPageSchema, defaults: DEFAULT_CHILD_AUTISM, path: '/assessments/children/autism' },
+  'assessment-combined': { label: 'Assessments › Combined ADHD & autism', description: 'Every section of the page.', schema: assessmentPageSchema, defaults: DEFAULT_COMBINED, path: '/assessments/adhd-and-autism' },
 };
 
 /** Whether `key` names an editable document. Own-property check, so names like "constructor" aren't mistaken for content. */

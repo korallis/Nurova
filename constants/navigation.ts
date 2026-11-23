@@ -9,8 +9,12 @@ export const ROUTES = {
   ourApproach: '/about/our-approach',
   quality: '/about/quality-and-clinical-standards',
   assessments: '/assessments',
-  adhdAssessment: '/assessments/adhd',
-  autismAssessment: '/assessments/autism',
+  adultAssessments: '/assessments/adults',
+  childAssessments: '/assessments/children',
+  adultAdhd: '/assessments/adults/adhd',
+  adultAutism: '/assessments/adults/autism',
+  childAdhd: '/assessments/children/adhd',
+  childAutism: '/assessments/children/autism',
   combinedAssessment: '/assessments/adhd-and-autism',
   assessmentJourney: '/assessments#journey',
   conditions: '/conditions',
@@ -36,6 +40,10 @@ export type PageId = 'home' | 'about' | 'assessments' | 'conditions' | 'support'
 export interface NavItem {
   label: string;
   href: string;
+  /** Bold, e.g. the section's own page at the top of its dropdown. */
+  bold?: boolean;
+  /** Pages under this one, shown indented and in italics. */
+  children?: NavItem[];
 }
 
 export interface NavLinkConfig {
@@ -65,8 +73,23 @@ export const NAV_LINKS: NavLinkConfig[] = [
     label: 'Assessments',
     href: ROUTES.assessments,
     dropdown: [
-      { label: 'Adult Assessments', href: '/assessments/adults' },
-      { label: 'Child Assessments', href: '/assessments/children' },
+      { label: 'Assessments', href: ROUTES.assessments, bold: true },
+      {
+        label: 'Adult Assessments',
+        href: ROUTES.adultAssessments,
+        children: [
+          { label: 'Adult ADHD Assessments', href: ROUTES.adultAdhd },
+          { label: 'Adult Autism Assessments', href: ROUTES.adultAutism },
+        ],
+      },
+      {
+        label: 'Child Assessments',
+        href: ROUTES.childAssessments,
+        children: [
+          { label: 'Child ADHD Assessments', href: ROUTES.childAdhd },
+          { label: 'Child Autism Assessments', href: ROUTES.childAutism },
+        ],
+      },
       { label: 'Combined ADHD & Autism', href: ROUTES.combinedAssessment },
     ],
   },
@@ -155,7 +178,7 @@ export function activePage(pathname: string): PageId {
   const path = pathname.replace(/\/+$/, '') || '/';
   const [segment] = path.replace(/^\//, '').split('/');
   const match = [...NAV_LINKS, CONTACT_LINK].find(
-    (link) => link.href === `/${segment}` || link.dropdown?.some((item) => item.href.split('#')[0] === path)
+    (link) => link.href === `/${segment}` || link.dropdown?.some((item) => [item, ...(item.children ?? [])].some((i) => i.href.split('#')[0] === path))
   );
   return match?.id ?? 'home';
 }

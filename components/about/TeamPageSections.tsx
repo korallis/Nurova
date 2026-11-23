@@ -1,9 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { motion } from 'motion/react';
-import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
+import { AnimatePresence, motion } from 'motion/react';
 import { LongArrow } from '@/components/common/LongArrow';
 import { MultiLine } from '@/components/common/MultiLine';
 import { Reveal, Stagger, StaggerItem } from '@/components/motion/Reveal';
@@ -31,9 +30,9 @@ function TeamHero({ content }: { content: TeamPageContent['hero'] }) {
         <div className="relative isolate overflow-hidden rounded-[2rem] text-white xl:u-h-762 xl:u-rounded-50">
           {image?.src ? (
             <>
-              <Image src={image.src} alt={image.alt} fill priority sizes="(min-width: 1280px) 90vw, 100vw" className="-z-20 object-cover" />
-              <div aria-hidden="true" className="absolute inset-0 -z-10 bg-brand-violet/55 mix-blend-multiply" />
-              <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-r from-brand-purple/35 to-transparent" />
+              {/* As in the design: the photo at 70% over violet. */}
+              <div aria-hidden="true" className="absolute inset-0 -z-30 bg-brand-violet" />
+              <Image src={image.src} alt={image.alt} fill priority sizes="(min-width: 1280px) 90vw, 100vw" className="-z-20 object-cover opacity-70" />
             </>
           ) : (
             <div aria-hidden="true" className={cn('absolute inset-0 -z-20', gradient)} />
@@ -61,74 +60,142 @@ function TeamHero({ content }: { content: TeamPageContent['hero'] }) {
   );
 }
 
-/** A team member's full card, opened from the grid. */
-function MemberDialog({ member, onClose }: { member: TeamMember | null; onClose: () => void }) {
-  return (
-    <Dialog open={member !== null} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-4xl gap-0 overflow-hidden border-0 p-0 md:grid-cols-[2fr_3fr] [&>button:last-child]:text-white [&>button:last-child]:hover:bg-white/15 [&>button:last-child]:hover:text-white">
-        {member && (
-          <>
-            <div className="relative min-h-64 bg-brand-lilac md:min-h-full">
-              {member.image?.src ? (
-                <Image src={member.image.src} alt={member.image.alt} fill sizes="(min-width: 768px) 360px, 100vw" className="object-cover" />
-              ) : (
-                <div aria-hidden="true" className={cn('absolute inset-0 rotate-180', gradient)} />
-              )}
-            </div>
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="bg-brand-coral p-7 text-white sm:p-10"
-            >
-              <DialogTitle className="pr-8 text-3xl font-bold leading-tight text-white sm:text-4xl">{member.name}</DialogTitle>
-              <p className="mt-2 text-lg font-medium sm:text-xl">{member.role}</p>
-              <DialogDescription className="mt-6 whitespace-pre-line text-base leading-relaxed text-white">{member.bio}</DialogDescription>
-            </motion.div>
-          </>
-        )}
-      </DialogContent>
-    </Dialog>
+const cardShape = 'relative block h-[26rem] w-full overflow-hidden rounded-[2rem] bg-brand-lilac sm:h-[28rem] xl:u-h-634 xl:u-rounded-40';
+
+/** A member's photo with the frosted "Meet …, role" label; a button in the row, a plain card when opened. */
+function PhotoCard({ member, onOpen, buttonRef }: { member: TeamMember; onOpen?: () => void; buttonRef?: (el: HTMLButtonElement | null) => void }) {
+  const inner = (
+    <>
+      {member.image?.src ? (
+        <Image
+          src={member.image.src}
+          alt=""
+          fill
+          sizes="(min-width: 1280px) 26vw, (min-width: 640px) 50vw, 85vw"
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+        />
+      ) : (
+        <div aria-hidden="true" className={cn('absolute inset-0 rotate-180', gradient)} />
+      )}
+      <span className="absolute inset-x-4 bottom-4 flex min-h-24 flex-col justify-center rounded-[1.25rem] bg-white/75 px-5 py-4 pr-16 text-left backdrop-blur-md transition-colors duration-300 group-hover:bg-white/90 xl:u-bottom-33 xl:u-left-30 xl:u-right-30 xl:u-h-108 xl:u-rounded-25 xl:u-pl-27 xl:u-pr-30 xl:u-py-0">
+        <span className="text-lg font-bold leading-snug text-brand-purple xl:u-text-30 xl:u-leading-35">
+          Meet {member.name}, {shortRole(member.role)}
+        </span>
+        <LongArrow className="absolute bottom-5 right-5 w-12 text-brand-purple transition-transform duration-300 ease-out group-hover:translate-x-1.5 xl:u-bottom-22 xl:u-right-22 xl:u-w-54" />
+      </span>
+    </>
+  );
+  return onOpen ? (
+    <button
+      ref={buttonRef}
+      type="button"
+      onClick={onOpen}
+      className={cn(cardShape, 'group cursor-pointer focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-violet')}
+    >
+      {inner}
+    </button>
+  ) : (
+    <div className={cardShape}>{inner}</div>
   );
 }
 
-/** The team as photo cards; each opens the person's full card. The people are edited on the About page. */
-function TeamGrid({ members }: { members: TeamMember[] }) {
-  const [open, setOpen] = useState<TeamMember | null>(null);
+/**
+ * An opened member, as in the design: their photo card with a violet card
+ * beside it holding their name, role and full bio; the back arrow returns to
+ * the whole team.
+ */
+function OpenMember({ member, onBack }: { member: TeamMember; onBack: () => void }) {
+  const heading = useRef<HTMLHeadingElement>(null);
+  useEffect(() => heading.current?.focus(), []);
+  const title = `Meet ${member.name}, ${shortRole(member.role)}`;
+
   return (
-    <>
-      <SwipeRow label="Our team" labels={members.map((m) => m.name)} className="mt-12 sm:mt-16 xl:u-mt-102">
-        {members.map((member, i) => (
-          <motion.div key={member.name + i} custom={i} variants={swipeCardVariants} className={cn(swipeCardSize, 'xl:u-w-489')}>
-            <button
-              type="button"
-              onClick={() => setOpen(member)}
-              aria-haspopup="dialog"
-              className="group relative block h-[26rem] w-full cursor-pointer overflow-hidden rounded-[2rem] bg-brand-lilac text-left focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-violet sm:h-[28rem] xl:u-h-634 xl:u-rounded-40"
-            >
-              {member.image?.src ? (
-                <Image
-                  src={member.image.src}
-                  alt=""
-                  fill
-                  sizes="(min-width: 1280px) 26vw, (min-width: 640px) 50vw, 85vw"
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                />
-              ) : (
-                <div aria-hidden="true" className={cn('absolute inset-0 rotate-180', gradient)} />
-              )}
-              <span className="absolute inset-x-4 bottom-4 flex min-h-24 flex-col justify-center rounded-[1.25rem] bg-white/75 px-5 py-4 pr-16 backdrop-blur-md transition-colors duration-300 group-hover:bg-white/90 xl:u-bottom-33 xl:u-left-30 xl:u-right-30 xl:u-h-108 xl:u-rounded-25 xl:u-pl-27 xl:u-pr-30 xl:u-py-0">
-                <span className="text-lg font-bold leading-snug text-brand-purple xl:u-text-30 xl:u-leading-35">
-                  Meet {member.name}, {shortRole(member.role)}
-                </span>
-                <LongArrow className="absolute bottom-5 right-5 w-12 text-brand-purple transition-transform duration-300 ease-out group-hover:translate-x-1.5 xl:u-bottom-22 xl:u-right-22 xl:u-w-54" />
-              </span>
-            </button>
+    <motion.div
+      key={member.name}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0, transition: { duration: 0.2 } }}
+      className="mx-auto grid w-[calc(100%-2.5rem)] gap-5 sm:w-[calc(100%-4rem)] sm:grid-cols-2 sm:gap-6 xl:w-auto xl:u-max-w-1012 xl:grid-cols-[calc(var(--u)*489)_calc(var(--u)*489)] xl:u-gap-34"
+    >
+      <motion.div initial={{ x: 40, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}>
+        <PhotoCard member={member} />
+      </motion.div>
+      <motion.section
+        aria-labelledby="open-member-heading"
+        initial={{ x: -60, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+        className="flex min-h-[26rem] flex-col rounded-[2rem] bg-brand-violet p-7 text-white sm:min-h-[28rem] sm:p-9 xl:u-h-634 xl:u-rounded-40 xl:u-px-46 xl:u-pt-55 xl:u-pb-46"
+      >
+        <h2 id="open-member-heading" ref={heading} tabIndex={-1} className="text-2xl font-bold leading-tight focus:outline-none xl:u-text-34 xl:u-leading-40">
+          {title}
+        </h2>
+        <p className="mt-5 whitespace-pre-line text-sm leading-relaxed xl:u-mt-26 xl:u-text-18 xl:u-leading-30">{member.bio}</p>
+        <button
+          type="button"
+          onClick={onBack}
+          className="group mt-auto inline-flex w-fit cursor-pointer items-center gap-3 rounded pt-6 font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+        >
+          <LongArrow className="w-12 rotate-180 transition-transform duration-300 ease-out group-hover:-translate-x-1.5 xl:u-w-54" />
+          <span className="sr-only">Back to the whole team</span>
+        </button>
+      </motion.section>
+    </motion.div>
+  );
+}
+
+/** The team as photo cards; pressing one opens that person beside their photo. The people are edited on the About page. */
+function TeamGrid({ members }: { members: TeamMember[] }) {
+  const [open, setOpen] = useState<number | null>(null);
+  const cardRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const lastOpened = useRef<number | null>(null);
+
+  const back = () => {
+    lastOpened.current = open;
+    setOpen(null);
+  };
+
+  // Escape returns to the team too.
+  useEffect(() => {
+    if (open === null) return;
+    const onKey = (event: KeyboardEvent) => event.key === 'Escape' && back();
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+    // `back` only reads `open`, which is a dependency.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  return (
+    <div className="mt-12 sm:mt-16 xl:u-mt-102">
+      <AnimatePresence
+        mode="wait"
+        initial={false}
+        // Back on the row, put focus on the card that was opened.
+        onExitComplete={() => {
+          if (open === null && lastOpened.current !== null) cardRefs.current[lastOpened.current]?.focus();
+        }}
+      >
+        {open !== null && members[open] ? (
+          <OpenMember key="open" member={members[open]} onBack={back} />
+        ) : (
+          <motion.div key="row" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 0.2 } }}>
+            <SwipeRow label="Our team" labels={members.map((m) => m.name)}>
+              {members.map((member, i) => (
+                <motion.div key={member.name + i} custom={i} variants={swipeCardVariants} className={cn(swipeCardSize, 'xl:u-w-489')}>
+                  <PhotoCard
+                    member={member}
+                    onOpen={() => setOpen(i)}
+                    buttonRef={(el) => {
+                      cardRefs.current[i] = el;
+                    }}
+                  />
+                </motion.div>
+              ))}
+            </SwipeRow>
           </motion.div>
-        ))}
-      </SwipeRow>
-      <MemberDialog member={open} onClose={() => setOpen(null)} />
-    </>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
 

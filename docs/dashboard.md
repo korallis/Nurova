@@ -64,6 +64,17 @@ The home page has three photo spots, set under **Website content → Home page**
 
 Upload photos from the editor (needs Vercel Blob), or add the files to `public/images` and list them in `lib/content/photo-library.ts` so they appear under “Choose from site photos”.
 
+Site photos are organised by page, named after their section:
+
+| Folder | Page |
+| --- | --- |
+| `public/images/home/` | Home (`hero`, `journey`, `help`) |
+| `public/images/about/` | About (`hero`, `mission`, `vision`, `values`), with `quality/`, `approach/` and `team/` for its sub-pages |
+| `public/images/team/` | Team headshots, used on About and Meet the Team |
+| `public/images/assessments/` | `overview/`, `adults/`, `children/` and `combined/`; each assessment has its own folder, e.g. `adults/adhd/` (`hero`, `why`) |
+
+Designers’ Figma exports (SVGs with a photo inside, often 5–15MB) don’t go in `public`: extract the photo as a WebP at the size the design shows it. The originals are kept in `../design-exports`, outside the website.
+
 ## Launching the full site (developers)
 
 `/` redirects to `/coming-soon` (see `next.config.ts`) and the finished home page can be previewed at **`/home`** (hidden from search engines). At launch, swap the redirect as the comment in `next.config.ts` explains, and delete `app/(site)/home`. Public pages that share the header and footer go in `app/(site)/`, as on Muve Futures; the menu and footer already link to the planned addresses (`constants/navigation.ts`).
