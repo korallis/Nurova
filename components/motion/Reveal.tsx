@@ -70,14 +70,16 @@ interface StaggerProps {
   delay?: number;
   onLoad?: boolean;
   as?: 'div' | 'ul' | 'ol';
+  style?: React.CSSProperties;
 }
 
 /** Parent for `StaggerItem`s: the items animate in one after another. */
-export function Stagger({ children, className, stagger = 0.1, delay = 0, onLoad = false, as = 'div' }: StaggerProps) {
+export function Stagger({ children, className, stagger = 0.1, delay = 0, onLoad = false, as = 'div', style }: StaggerProps) {
   const Comp = as === 'ul' ? motion.ul : as === 'ol' ? motion.ol : motion.div;
   return (
     <Comp
       className={className}
+      style={style}
       initial="hidden"
       variants={{ hidden: {}, shown: { transition: { staggerChildren: stagger, delayChildren: delay } } }}
       {...trigger(onLoad, 0.15)}

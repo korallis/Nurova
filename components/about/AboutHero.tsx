@@ -22,11 +22,14 @@ export function AboutHero({
   primaryHref = ROUTES.book,
   secondaryHref = ROUTES.contact,
   headingId = 'about-heading',
+  wide = false,
 }: {
   content: Pick<AboutContent['hero'], 'label' | 'title' | 'body' | 'image' | 'primaryCta' | 'secondaryCta'>;
   primaryHref?: string;
   secondaryHref?: string;
   headingId?: string;
+  /** The title runs across the card over a smaller photo that stays inside the card (the conditions overview). */
+  wide?: boolean;
 }) {
   const { image } = content;
 
@@ -39,14 +42,14 @@ export function AboutHero({
           <div aria-hidden="true" className={cn('absolute inset-0 -z-10', gradient)} />
           <Swirl delay={0.9} className="left-[30%] top-[-3%] w-[100%] sm:left-[42%] sm:w-[70%] xl:left-[37.8%] xl:top-[-1%] xl:w-[42.6%]" />
 
-          <Stagger onLoad delay={0.4} stagger={0.15} className="relative px-7 pb-10 pt-12 sm:px-12 sm:pb-14 sm:pt-16 xl:u-max-w-1200 xl:u-pl-100 xl:u-pr-0 xl:u-pt-77 xl:u-pb-0">
+          <Stagger onLoad delay={0.4} stagger={0.15} className={cn('relative px-7 pb-10 pt-12 sm:px-12 sm:pb-14 sm:pt-16 xl:u-pl-100', wide ? 'xl:u-max-w-1720' : 'xl:u-max-w-1200', 'xl:u-pr-0 xl:u-pt-77 xl:u-pb-0')}>
             <StaggerItem>
               <h1 id={headingId} className="text-[2.4rem] font-bold leading-[1.05] sm:text-6xl xl:u-text-90 xl:u-leading-115">
                 <MultiLine text={content.title} />
               </h1>
             </StaggerItem>
             <StaggerItem>
-              <p className="mt-5 max-w-xl text-base leading-relaxed sm:text-xl sm:leading-relaxed xl:u-mt-24 xl:u-max-w-640 xl:u-text-30 xl:u-leading-45">{content.body}</p>
+              <p className={cn('mt-5 max-w-xl text-base leading-relaxed sm:text-xl sm:leading-relaxed xl:u-mt-24 xl:u-text-30 xl:u-leading-45', wide ? 'xl:u-max-w-520' : 'xl:u-max-w-640')}>{content.body}</p>
             </StaggerItem>
             <StaggerItem className="mt-8 flex flex-wrap gap-3 xl:u-mt-61 xl:u-gap-24">
               <ButtonLink href={primaryHref} variant="whitePurple">
@@ -68,7 +71,7 @@ export function AboutHero({
 
         {/* From `xl` up the photo sits outside the card's clipping so its head can rise above it. */}
         {image?.src && (
-          <Reveal onLoad from="up" delay={0.5} className="pointer-events-none absolute bottom-0 right-0 hidden xl:block xl:u-h-796">
+          <Reveal onLoad from="up" delay={0.5} className={cn('pointer-events-none absolute bottom-0 right-0 hidden xl:block', wide ? 'xl:u-h-608' : 'xl:u-h-796')}>
             <Image
               src={image.src}
               alt={image.alt}

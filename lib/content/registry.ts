@@ -38,7 +38,17 @@ import {
   type AssessmentPageContent,
   type AssessmentsOverviewContent,
 } from './assessments';
-import { assessmentHubSchema, assessmentPageSchema, assessmentsOverviewSchema } from './assessment-schemas';
+import { assessmentHubSchema, assessmentPageSchema, assessmentsOverviewSchema, conditionPageSchema } from './assessment-schemas';
+import {
+  DEFAULT_CONDITION_ADHD,
+  DEFAULT_CONDITION_AUDHD,
+  DEFAULT_CONDITION_AUTISM,
+  DEFAULT_CONDITION_DYSLEXIA,
+  DEFAULT_CONDITION_DYSPRAXIA,
+  DEFAULT_CONDITION_EXECUTIVE_FUNCTION,
+  DEFAULT_CONDITIONS_OVERVIEW,
+  type ConditionPageContent,
+} from './conditions';
 
 interface SingleDef<T> {
   label: string;
@@ -64,6 +74,13 @@ export interface SingleTypes {
   'assessment-child-adhd': AssessmentPageContent;
   'assessment-child-autism': AssessmentPageContent;
   'assessment-combined': AssessmentPageContent;
+  conditions: AssessmentsOverviewContent;
+  'condition-adhd': ConditionPageContent;
+  'condition-audhd': ConditionPageContent;
+  'condition-autism': ConditionPageContent;
+  'condition-dyslexia': ConditionPageContent;
+  'condition-dyspraxia': ConditionPageContent;
+  'condition-executive-function': ConditionPageContent;
 }
 
 /** The five pages that share the assessment template. */
@@ -110,6 +127,19 @@ export const SINGLES: { [K in SingleKey]: SingleDef<SingleTypes[K]> } = {
   'assessment-child-adhd': { label: 'Assessments › Child ADHD', description: 'Every section of the page.', schema: assessmentPageSchema, defaults: DEFAULT_CHILD_ADHD, path: '/assessments/children/adhd' },
   'assessment-child-autism': { label: 'Assessments › Child autism', description: 'Every section of the page.', schema: assessmentPageSchema, defaults: DEFAULT_CHILD_AUTISM, path: '/assessments/children/autism' },
   'assessment-combined': { label: 'Assessments › Combined ADHD & autism', description: 'Every section of the page.', schema: assessmentPageSchema, defaults: DEFAULT_COMBINED, path: '/assessments/adhd-and-autism' },
+  conditions: {
+    label: 'Conditions overview',
+    description: 'The /conditions page: hero, finder, condition cards, what happens and professional enquiries.',
+    schema: assessmentsOverviewSchema,
+    defaults: DEFAULT_CONDITIONS_OVERVIEW,
+    path: '/conditions',
+  },
+  'condition-adhd': { label: 'Conditions › ADHD', description: 'Every section of the page.', schema: conditionPageSchema, defaults: DEFAULT_CONDITION_ADHD, path: '/conditions/adhd' },
+  'condition-audhd': { label: 'Conditions › AuDHD', description: 'Every section of the page.', schema: conditionPageSchema, defaults: DEFAULT_CONDITION_AUDHD, path: '/conditions/audhd' },
+  'condition-autism': { label: 'Conditions › Autism', description: 'Every section of the page.', schema: conditionPageSchema, defaults: DEFAULT_CONDITION_AUTISM, path: '/conditions/autism' },
+  'condition-dyslexia': { label: 'Conditions › Dyslexia', description: 'Every section of the page.', schema: conditionPageSchema, defaults: DEFAULT_CONDITION_DYSLEXIA, path: '/conditions/dyslexia' },
+  'condition-dyspraxia': { label: 'Conditions › Dyspraxia', description: 'Every section of the page.', schema: conditionPageSchema, defaults: DEFAULT_CONDITION_DYSPRAXIA, path: '/conditions/dyspraxia' },
+  'condition-executive-function': { label: 'Conditions › Executive function', description: 'Every section of the page.', schema: conditionPageSchema, defaults: DEFAULT_CONDITION_EXECUTIVE_FUNCTION, path: '/conditions/executive-function' },
 };
 
 /** Whether `key` names an editable document. Own-property check, so names like "constructor" aren't mistaken for content. */

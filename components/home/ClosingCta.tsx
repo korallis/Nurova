@@ -27,6 +27,13 @@ const STROKES = {
       <Spiral color={right} className="hidden -rotate-90 md:block md:-bottom-20 md:right-4 md:w-52 xl:bottom-auto xl:right-auto xl:u-left-1374 xl:u-top-227 xl:u-w-360" />
     </>
   ),
+  /** As squiggleAndSpiral, with the squiggle turned upside down (most condition pages). */
+  flippedSquiggleAndSpiral: (left: string, right: string) => (
+    <>
+      <Squiggle color={left} className="-left-6 -top-4 w-36 rotate-180 sm:left-0 sm:w-48 xl:u-left-60 xl:u-top-50 xl:u-w-460" />
+      <Spiral color={right} className="hidden -rotate-90 md:block md:-bottom-20 md:right-4 md:w-52 xl:bottom-auto xl:right-auto xl:u-left-1374 xl:u-top-227 xl:u-w-360" />
+    </>
+  ),
   waves: (left: string, right: string) => (
     <>
       <WaveLeft color={left} className="-left-6 -top-2 w-36 sm:left-0 sm:w-48 xl:u-left-100 xl:u-top-51 xl:u-w-460" />
@@ -43,7 +50,9 @@ const VARIANTS = {
   team: { heading: 'text-brand-purple', primary: 'coral', strokes: 'waves', colors: [CORAL, CORAL], bodyWidth: 'max-w-2xl xl:u-max-w-800' },
   /** The five assessment pages: their stroke colours come from the page (the `colors` prop). */
   assessment: { heading: 'text-brand-purple', primary: 'violet', strokes: 'spiralAndSquiggle', colors: [PINK, PINK], bodyWidth: 'max-w-md xl:u-max-w-500' },
-  /** The adult and children assessment pages. */
+  /** The condition pages. */
+  condition: { heading: 'text-brand-purple', primary: 'violet', strokes: 'flippedSquiggleAndSpiral', colors: [CORAL, CORAL], bodyWidth: 'max-w-2xl xl:u-max-w-800' },
+  /** The adult and children assessment pages (and Executive Function). */
   hub: { heading: 'text-brand-purple', primary: 'violet', strokes: 'squiggleAndSpiral', colors: [CORAL, CORAL], bodyWidth: 'max-w-2xl xl:u-max-w-800' },
 } satisfies Record<string, { heading: string; primary: ButtonVariant; strokes: keyof typeof STROKES; colors: [string, string]; bodyWidth: string }>;
 

@@ -11,9 +11,9 @@ export interface LibraryPhoto {
 }
 
 export const PHOTO_LIBRARY: LibraryPhoto[] = [
-  { src: '/background.png', width: 1920, height: 1080, transparent: false },
-  { src: '/SVG/nurova2.svg', width: 504, height: 429, transparent: true },
-  { src: '/logo-wordmark.svg', width: 504, height: 165, transparent: true },
+  { src: '/graphics/backgrounds/gradient.png', width: 1920, height: 1080, transparent: false },
+  { src: '/graphics/logo/stacked.svg', width: 504, height: 429, transparent: true },
+  { src: '/graphics/logo/wordmark.svg', width: 504, height: 165, transparent: true },
   { src: '/images/home/hero.png', width: 820, height: 731, transparent: true },
   { src: '/images/home/journey.png', width: 932, height: 749, transparent: false },
   { src: '/images/home/help.png', width: 788, height: 548, transparent: true },
@@ -40,4 +40,11 @@ export const PHOTO_LIBRARY: LibraryPhoto[] = [
   { src: '/images/assessments/combined/hero.webp', width: 2560, height: 1037, transparent: false },
   { src: '/images/assessments/combined/why.webp', width: 1500, height: 1290, transparent: false },
   { src: '/images/assessments/overview/hero.webp', width: 1500, height: 1477, transparent: true },
+  { src: '/images/conditions/overview/hero.webp', width: 1800, height: 1106, transparent: true },
+  { src: '/images/conditions/adhd/hero.webp', width: 1300, height: 1546, transparent: false },
+  { src: '/images/conditions/audhd/hero.webp', width: 1500, height: 1528, transparent: false },
+  { src: '/images/conditions/autism/hero.webp', width: 1400, height: 1519, transparent: false },
+  { src: '/images/conditions/dyslexia/hero.webp', width: 1050, height: 1524, transparent: false },
+  { src: '/images/conditions/dyspraxia/hero.webp', width: 1050, height: 1524, transparent: false },
+  { src: '/images/conditions/executive-function/hero.webp', width: 1250, height: 1525, transparent: false },
 ];

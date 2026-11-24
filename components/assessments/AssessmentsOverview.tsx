@@ -35,13 +35,24 @@ function Centred({ id, title, body, children, className }: { id: string; title: 
   );
 }
 
-/** The assessments overview (/assessments); `content` is edited in the dashboard (Website content → Assessments overview). */
-export function AssessmentsOverview({ content }: { content: AssessmentsOverviewContent }) {
+/** The assessments overview (/assessments), also used for /conditions; edited in the dashboard (Assessments overview, Conditions overview). */
+export function AssessmentsOverview({
+  content,
+  headingId = 'assessments-heading',
+  cardsLabel = 'All assessments',
+  wideHero = false,
+}: {
+  content: AssessmentsOverviewContent;
+  headingId?: string;
+  cardsLabel?: string;
+  /** See AboutHero's `wide`. */
+  wideHero?: boolean;
+}) {
   const { hero, finder, during, unsure, professionals } = content;
 
   return (
     <div className="flex w-full flex-col overflow-x-clip">
-      <AboutHero content={{ label: content.label, ...hero }} primaryHref="#find-assessment" secondaryHref={ROUTES.contact} headingId="assessments-heading" />
+      <AboutHero content={{ label: content.label, ...hero }} primaryHref="#find-assessment" secondaryHref={ROUTES.contact} headingId={headingId} wide={wideHero} />
 
       {/* Find the right assessment */}
       <section id="find-assessment" aria-labelledby="finder-heading" className="mt-16 scroll-mt-28 sm:mt-20 xl:u-mt-100">
@@ -53,7 +64,7 @@ export function AssessmentsOverview({ content }: { content: AssessmentsOverviewC
             {finder.childCta}
           </ButtonLink>
         </Centred>
-        <AssessmentCarousel cards={content.cards} tone="violet" label="All assessments" className="mt-10 sm:mt-14 xl:u-mt-70" />
+        <AssessmentCarousel cards={content.cards} tone="violet" label={cardsLabel} className="mt-10 sm:mt-14 xl:u-mt-70" />
       </section>
 
       {/* What happens during an assessment? */}

@@ -72,6 +72,9 @@ Site photos are organised by page, named after their section:
 | `public/images/about/` | About (`hero`, `mission`, `vision`, `values`), with `quality/`, `approach/` and `team/` for its sub-pages |
 | `public/images/team/` | Team headshots, used on About and Meet the Team |
 | `public/images/assessments/` | `overview/`, `adults/`, `children/` and `combined/`; each assessment has its own folder, e.g. `adults/adhd/` (`hero`, `why`) |
+| `public/images/conditions/` | `overview/`, then one folder per condition (`adhd/`, `audhd/`, `autism/`, `dyslexia/`, `dyspraxia/`, `executive-function/`), each with its `hero` |
+
+Brand graphics (not editable in the dashboard) are in `public/graphics/`: `logo/` (stacked, horizontal and wordmark versions), `icons/` (social icons, the long arrow) and `backgrounds/` (the brand gradient) and `strokes/` (the hand-drawn swirl, brush, spiral, squiggle and waves). Each stroke file has one line with `id="stroke"`; `components/home/Decorations.tsx` places it with colour and width, and draws it in. To change a shape, edit its file and keep that id.
 
 Designers’ Figma exports (SVGs with a photo inside, often 5–15MB) don’t go in `public`: extract the photo as a WebP at the size the design shows it. The originals are kept in `../design-exports`, outside the website.
 

@@ -26,7 +26,7 @@ export default async function PanelLayout({ children }: { children: React.ReactN
     <div className="flex min-h-screen flex-col md:flex-row">
       <aside className="shrink-0 bg-brand-ink md:sticky md:top-0 md:flex md:h-screen md:w-60 md:flex-col">
         <Link href="/admin" className="block px-5 pt-5" aria-label="Dashboard home">
-          <Image src="/logo-wordmark.svg" width={504} height={165} alt="Nurova" className="h-auto w-28 brightness-0 invert" />
+          <Image src="/graphics/logo/wordmark.svg" width={504} height={165} alt="Nurova" className="h-auto w-28 brightness-0 invert" />
         </Link>
         <AdminNav name={admin.name} counts={counts} areas={areas} superAdmin={isSuperAdmin(admin)} />
       </aside>

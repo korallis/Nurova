@@ -16,7 +16,7 @@ export function Footer({ settings }: { settings: SettingsContent }) {
   return (
     <footer className="mx-auto mb-5 mt-16 w-[calc(100%-2.5rem)] sm:mb-8 sm:w-[calc(100%-4rem)] xl:mt-0 xl:u-mb-24 xl:u-w-1720">
       <Reveal from="up" className="relative isolate overflow-hidden rounded-[2rem] text-white xl:u-rounded-50">
-        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-brand-purple bg-[url(/background.png)] bg-cover bg-center" />
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-brand-purple bg-[url(/graphics/backgrounds/gradient.png)] bg-cover bg-center" />
 
         <div className="flex flex-col gap-12 px-7 py-12 sm:px-12 sm:py-14 lg:flex-row lg:items-start lg:justify-between xl:u-min-h-542 xl:gap-0 xl:u-pl-100 xl:u-pr-146 xl:u-pt-80 xl:u-pb-93">
           <div>

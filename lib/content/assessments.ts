@@ -24,7 +24,7 @@ export const FAQ_TONES = { coral: 'Coral', purple: 'Deep purple', lavender: 'Lav
 export type FaqTone = keyof typeof FAQ_TONES;
 
 /** The hand-drawn strokes by the closing call to action. */
-export const STROKE_TONES = { pink: 'Pink', lavender: 'Lavender', violet: 'Violet', coral: 'Coral' } as const;
+export const STROKE_TONES = { pink: 'Pink', lavender: 'Lavender', violet: 'Violet', coral: 'Coral', salmon: 'Salmon' } as const;
 export type StrokeTone = keyof typeof STROKE_TONES;
 
 // ── The five assessment pages ──────────────────────────────────────────────

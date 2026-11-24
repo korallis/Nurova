@@ -2,9 +2,9 @@ import type { SettingsContent } from '@/lib/content/pages';
 import { cn } from '@/lib/utils';
 
 export const SOCIALS = [
-  { key: 'linkedin', label: 'LinkedIn', icon: '/icons/linkedin.svg' },
-  { key: 'instagram', label: 'Instagram', icon: '/icons/instagram.svg' },
-  { key: 'facebook', label: 'Facebook', icon: '/icons/facebook.svg' },
+  { key: 'linkedin', label: 'LinkedIn', icon: '/graphics/icons/linkedin.svg' },
+  { key: 'instagram', label: 'Instagram', icon: '/graphics/icons/instagram.svg' },
+  { key: 'facebook', label: 'Facebook', icon: '/graphics/icons/facebook.svg' },
 ] as const;
 
 /** One white social icon; only a link once its URL is set in Site settings. */
