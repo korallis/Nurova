@@ -1,8 +1,14 @@
-/** The long, thin arrow after "Learn More" links. */
+import { cn } from '@/lib/utils';
+
+/** The long, thin arrow after "Learn More" links (public/graphics/icons/arrow-long.svg), in the current text colour. */
 export function LongArrow({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 54 16" fill="none" aria-hidden="true" className={className}>
-      <path d="M1 8h51M45 1.5 52 8l-7 6.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <span
+      aria-hidden="true"
+      className={cn(
+        'inline-block aspect-[54/16] shrink-0 bg-current [mask-image:url(/graphics/icons/arrow-long.svg)] [mask-repeat:no-repeat] [mask-size:contain]',
+        className
+      )}
+    />
   );
 }

@@ -1,5 +1,6 @@
 /** Editor schemas for the assessment pages (lib/content/assessments.ts). */
 import { CALLOUT_TONES, FAQ_TONES, STEP_TONES, STROKE_TONES } from './assessments';
+import { CONDITION_CARD_TONES, CONDITION_HERO_TONES } from './conditions';
 import { list, object, optional, photo, select, text, textarea, type Field } from './fields';
 
 const heading = (label = 'Heading') => textarea(label, { rows: 2, help: 'A line break starts a new line on larger screens.' });
@@ -91,4 +92,37 @@ export const assessmentsOverviewSchema: Field = object({
   ),
   unsure: object({ title: text('Heading'), body: lines(), ...twoButtons('“Speak to a Specialist”', '“Contact Us”') }, 'Unsure which assessment to choose'),
   professionals: object({ title: text('Heading'), body: body(), cta: text('Button label') }, 'For schools, NHS teams and commissioners'),
+});
+
+// ── Conditions ─────────────────────────────────────────────────────────────
+
+const points = (label: string) => list(label, textarea('Point', { rows: 2, help: 'A line break starts a new line.' }), { help: 'Shown as bullet points.' });
+
+export const conditionPageSchema: Field = object({
+  label: text('Label', { help: 'The coral label above the hero.' }),
+  hero: object(
+    {
+      tone: select('Card colour', CONDITION_HERO_TONES),
+      title: heading(),
+      body: body(),
+      image: optional('Photo', photo('Photo'), 'Fills the right of the card.'),
+      ...twoButtons('Main', '“Speak to a Specialist”'),
+    },
+    'Hero'
+  ),
+  details: object(
+    { tone: select('Card colour', CONDITION_CARD_TONES), title: text('Heading'), body: body(), left: points('Left column'), right: points('Right column') },
+    'Characteristics card'
+  ),
+  closing: object(
+    {
+      title: heading(),
+      body: lines(),
+      ...twoButtons('Main', '“Contact Us”'),
+      squiggle: select('Left squiggle', { flipped: 'Upside down', upright: 'Upright' }),
+      strokeLeft: select('Left stroke colour', STROKE_TONES),
+      strokeRight: select('Right stroke colour', STROKE_TONES),
+    },
+    'Closing call to action'
+  ),
 });

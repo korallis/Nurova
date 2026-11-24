@@ -27,7 +27,21 @@ const nextConfig: NextConfig = {
       'approach-hero.webp': 'about/approach/hero.webp',
       'team-hero.webp': 'about/team/hero.webp',
     };
-    return Object.entries(moved).map(([from, to]) => ({ source: `/images/${from}`, destination: `/images/${to}` }));
+    // Graphics moved into public/graphics/ (logo, icons, backgrounds).
+    const graphics: Record<string, string> = {
+      '/background.png': '/graphics/backgrounds/gradient.png',
+      '/background.svg': '/graphics/backgrounds/gradient.svg',
+      '/logo-wordmark.svg': '/graphics/logo/wordmark.svg',
+      '/SVG/nurova2.svg': '/graphics/logo/stacked.svg',
+      '/SVG/nurova.svg': '/graphics/logo/stacked-with-tagline.svg',
+      '/icons/linkedin.svg': '/graphics/icons/linkedin.svg',
+      '/icons/instagram.svg': '/graphics/icons/instagram.svg',
+      '/icons/facebook.svg': '/graphics/icons/facebook.svg',
+    };
+    return [
+      ...Object.entries(moved).map(([from, to]) => ({ source: `/images/${from}`, destination: `/images/${to}` })),
+      ...Object.entries(graphics).map(([source, destination]) => ({ source, destination })),
+    ];
   },
   async redirects() {
     return [

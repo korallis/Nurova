@@ -25,7 +25,7 @@ export function Backdrop({ flipped = false }: { flipped?: boolean }) {
   return (
     <motion.div
       aria-hidden="true"
-      className="pointer-events-none absolute -inset-[8%] -z-10 bg-brand-purple bg-[url(/background.png)] bg-cover bg-center"
+      className="pointer-events-none absolute -inset-[8%] -z-10 bg-brand-purple bg-[url(/graphics/backgrounds/gradient.png)] bg-cover bg-center"
       initial={{ rotate, scale: 1.04, x: '0%', y: '0%' }}
       animate={{ rotate, scale: [1.04, 1.12, 1.04], x: ['0%', '-2.5%', '0%'], y: ['0%', '2%', '0%'] }}
       transition={{ duration: 26, ease: 'easeInOut', repeat: Infinity }}
@@ -39,7 +39,7 @@ export function BrandLockup({ siteName, tagline }: { siteName: string; tagline: 
     <Stagger onLoad delay={0.1} stagger={0.25} className="flex flex-col items-center text-center">
       <StaggerItem from="zoom">
         <motion.img
-          src="/SVG/nurova2.svg"
+          src="/graphics/logo/stacked.svg"
           alt={siteName}
           width={504}
           height={429}

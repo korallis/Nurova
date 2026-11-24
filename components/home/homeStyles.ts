@@ -8,7 +8,7 @@
 export const container = 'mx-auto w-[calc(100%-2.5rem)] sm:w-[calc(100%-4rem)] xl:u-w-1720';
 
 /** The coral-to-purple brand gradient on the big cards. */
-export const gradient = 'bg-brand-purple bg-[url(/background.png)] bg-cover bg-center';
+export const gradient = 'bg-brand-purple bg-[url(/graphics/backgrounds/gradient.png)] bg-cover bg-center';
 
 /** The hero heading ("Clarity starts here."). */
 export const displayHeading = 'text-[2.4rem] font-bold leading-[1.05] sm:text-6xl xl:u-text-90 xl:u-leading-100';

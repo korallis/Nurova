@@ -1,0 +1,4 @@
+<!-- A hand-drawn brand stroke. Colour and width are set where it is used (components/home/Decorations.tsx), which draws it in via the #stroke path. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 370" fill="none">
+  <path id="stroke" fill="none" d="M 30 195 C 55 270, 120 330, 205 338 C 290 345, 350 280, 362 210 C 375 130, 340 50, 270 25 C 200 2, 145 45, 140 100 C 135 150, 175 190, 230 195 C 275 198, 300 160, 285 128 C 275 106, 250 102, 232 104" pathLength="1" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

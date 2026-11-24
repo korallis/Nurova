@@ -47,6 +47,7 @@ export const STROKE_COLOURS: Record<StrokeTone, string> = {
   lavender: '#c16ef3',
   violet: 'var(--color-brand-violet)',
   coral: 'var(--color-brand-coral)',
+  salmon: '#fc8e8f',
 };
 
 // ── Hero ───────────────────────────────────────────────────────────────────
