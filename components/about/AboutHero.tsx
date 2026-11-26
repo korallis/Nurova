@@ -44,7 +44,7 @@ export function AboutHero({
 
           <Stagger onLoad delay={0.4} stagger={0.15} className={cn('relative px-7 pb-10 pt-12 sm:px-12 sm:pb-14 sm:pt-16 xl:u-pl-100', wide ? 'xl:u-max-w-1720' : 'xl:u-max-w-1200', 'xl:u-pr-0 xl:u-pt-77 xl:u-pb-0')}>
             <StaggerItem>
-              <h1 id={headingId} className="text-[2.4rem] font-bold leading-[1.05] sm:text-6xl xl:u-text-90 xl:u-leading-115">
+              <h1 id={headingId} className="text-[clamp(1.75rem,9.5vw,2.4rem)] font-bold leading-[1.05] break-words sm:text-6xl xl:u-text-90 xl:u-leading-115">
                 <MultiLine text={content.title} />
               </h1>
             </StaggerItem>

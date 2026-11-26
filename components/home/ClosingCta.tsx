@@ -20,6 +20,13 @@ const STROKES = {
       <Squiggle color={right} className="hidden md:block md:-bottom-24 md:right-4 md:w-56 xl:bottom-auto xl:right-auto xl:u-left-1340 xl:u-top-204 xl:u-w-460" />
     </>
   ),
+  /** As spiralAndSquiggle, with the spiral turned so its tail starts at the top (Right to Choose). */
+  turnedSpiralAndSquiggle: (left: string, right: string) => (
+    <>
+      <Spiral color={left} className="-left-8 top-2 w-36 rotate-90 sm:left-0 sm:w-48 xl:u-left-70 xl:-u-top-10 xl:u-w-400" />
+      <Squiggle color={right} className="hidden md:block md:-bottom-24 md:right-4 md:w-56 xl:bottom-auto xl:right-auto xl:u-left-1340 xl:u-top-204 xl:u-w-460" />
+    </>
+  ),
   /** Swapped sides, the spiral turned so its tail runs down into the footer. */
   squiggleAndSpiral: (left: string, right: string) => (
     <>
@@ -50,6 +57,10 @@ const VARIANTS = {
   team: { heading: 'text-brand-purple', primary: 'coral', strokes: 'waves', colors: [CORAL, CORAL], bodyWidth: 'max-w-2xl xl:u-max-w-800' },
   /** The five assessment pages: their stroke colours come from the page (the `colors` prop). */
   assessment: { heading: 'text-brand-purple', primary: 'violet', strokes: 'spiralAndSquiggle', colors: [PINK, PINK], bodyWidth: 'max-w-md xl:u-max-w-500' },
+  /** Right to Choose: as the assessment pages, with the spiral turned. */
+  rightToChoose: { heading: 'text-brand-purple', primary: 'violet', strokes: 'turnedSpiralAndSquiggle', colors: [PINK, PINK], bodyWidth: 'max-w-md xl:u-max-w-500' },
+  /** Support: as About, with a wider line of text. */
+  support: { heading: 'text-brand-purple', primary: 'violet', strokes: 'spiralAndSquiggle', colors: [PINK, PINK], bodyWidth: 'max-w-2xl xl:u-max-w-900' },
   /** The condition pages. */
   condition: { heading: 'text-brand-purple', primary: 'violet', strokes: 'flippedSquiggleAndSpiral', colors: [CORAL, CORAL], bodyWidth: 'max-w-2xl xl:u-max-w-800' },
   /** The adult and children assessment pages (and Executive Function). */
@@ -66,16 +77,22 @@ export function ClosingCta({
   content,
   variant = 'home',
   colors,
+  primaryHref = ROUTES.book,
+  paddingTop = 'xl:u-pt-101',
 }: {
   content: { title: string; body: string; primaryCta: string; secondaryCta: string };
   variant?: keyof typeof VARIANTS;
   /** Left and right stroke colours, overriding the variant's. */
   colors?: [string, string];
+  /** Where the main button goes; "Book an Assessment" by default. */
+  primaryHref?: string;
+  /** Space above the heading from `xl` up, where a design differs from the usual 101. */
+  paddingTop?: string;
 }) {
   const v = VARIANTS[variant];
   const [left, right] = colors ?? v.colors;
   return (
-    <section aria-labelledby="closing-heading" className="relative z-10 w-full px-5 pb-6 pt-28 text-center sm:px-8 sm:pt-36 xl:u-pt-101 xl:u-pb-100">
+    <section aria-labelledby="closing-heading" className={cn('relative z-10 w-full px-5 pb-6 pt-28 text-center sm:px-8 sm:pt-36 xl:u-pb-100', paddingTop)}>
       {STROKES[v.strokes](left, right)}
 
       <Stagger stagger={0.14} className="relative mx-auto xl:u-max-w-1100">
@@ -90,7 +107,7 @@ export function ClosingCta({
           </p>
         </StaggerItem>
         <StaggerItem className="mt-8 flex flex-wrap justify-center gap-3 xl:u-mt-28 xl:u-gap-24">
-          <ButtonLink href={ROUTES.book} variant={v.primary}>
+          <ButtonLink href={primaryHref} variant={v.primary}>
             {content.primaryCta}
           </ButtonLink>
           <ButtonLink href={ROUTES.contact} variant="outlinePurple" className="xl:u-min-w-228">
