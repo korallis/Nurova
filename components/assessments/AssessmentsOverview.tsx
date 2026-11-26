@@ -84,7 +84,7 @@ export function AssessmentsOverview({
                 'flex min-h-[22rem] flex-col justify-end rounded-[1.75rem] p-7 text-white transition duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_18px_40px_rgba(247,86,88,0.3)] xl:u-h-580 xl:u-w-471 xl:u-rounded-30 xl:u-px-46 xl:u-pb-56'
               )}
             >
-              <h3 className="text-4xl font-bold leading-[1.05] xl:u-text-60 xl:u-leading-65">
+              <h3 className="text-[clamp(1.75rem,9vw,2.25rem)] font-bold leading-[1.05] break-words xl:u-text-60 xl:u-leading-65">
                 <MultiLine text={step.title} always />
               </h3>
               <p className="mt-3 text-base leading-snug xl:u-mt-15 xl:u-text-25 xl:u-leading-35">{step.body}</p>

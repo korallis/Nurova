@@ -11,7 +11,7 @@ export const container = 'mx-auto w-[calc(100%-2.5rem)] sm:w-[calc(100%-4rem)] x
 export const gradient = 'bg-brand-purple bg-[url(/graphics/backgrounds/gradient.png)] bg-cover bg-center';
 
 /** The hero heading ("Clarity starts here."). */
-export const displayHeading = 'text-[2.4rem] font-bold leading-[1.05] sm:text-6xl xl:u-text-90 xl:u-leading-100';
+export const displayHeading = 'text-[clamp(1.75rem,9.5vw,2.4rem)] font-bold leading-[1.05] break-words sm:text-6xl xl:u-text-90 xl:u-leading-100';
 
 /** Section headings. */
 export const sectionHeading = 'text-[2rem] font-bold leading-[1.1] sm:text-5xl sm:leading-[1.1] xl:u-text-70 xl:u-leading-70';

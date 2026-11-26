@@ -126,3 +126,121 @@ export const conditionPageSchema: Field = object({
     'Closing call to action'
   ),
 });
+
+// ── Right to Choose ────────────────────────────────────────────────────────
+
+export const rightToChooseSchema: Field = object({
+  label: text('Label', { help: 'The coral label above the hero.' }),
+  hero: object(
+    {
+      title: heading(),
+      body: body(),
+      image: optional('Photo', photo('Photo', 'Use a PNG or WebP with a transparent background.'), 'A cut-out standing on the right of the card.'),
+      ...twoButtons('“Check Your Eligibility”', '“Speak to Our Team”'),
+    },
+    'Hero'
+  ),
+  intro: object({ title: text('Heading'), body: lines(), ...twoButtons('“Check Your Eligibility”', '“Speak to Our Team”') }, 'What is Right to Choose?'),
+  who: object({ title: heading(), body: body(), cta: text('“Speak to a Specialist” button label') }, 'Who can use it (white card)'),
+  process: object(
+    { title: text('Heading'), steps: list('Steps', text('Step'), { min: 1, help: 'Shown as a numbered list.' }), cta: text('“Check Eligibility” button label') },
+    'How the process works (violet card)'
+  ),
+  checks: object(
+    { title: text('Heading'), steps: list('Cards', object({ title: heading('Title'), body: body() }), { itemTitle: 'title', min: 1, help: 'Shown three across on larger screens.' }) },
+    'What happens when we check eligibility'
+  ),
+  faq: object(
+    {
+      tone: select('Colour', FAQ_TONES),
+      title: text('Heading'),
+      items: list('Questions', object({ question: text('Question'), answer: body('Answer') }), { itemTitle: 'question', help: 'The first question starts open.' }),
+      cta: text('“View All FAQ’s” button label'),
+    },
+    'Frequently asked questions'
+  ),
+  closing: object(
+    {
+      title: heading(),
+      body: lines(),
+      ...twoButtons('“Check Eligibility”', '“Speak to a Specialist”'),
+      strokeLeft: select('Left stroke colour', STROKE_TONES),
+      strokeRight: select('Right stroke colour', STROKE_TONES),
+    },
+    'Closing call to action'
+  ),
+});
+
+// ── FAQs ───────────────────────────────────────────────────────────────────
+
+export const faqPageSchema: Field = object({
+  label: text('Label', { help: 'The coral label above the heading.' }),
+  title: text('Heading'),
+  categories: list('Categories', text('Category'), { min: 1, help: 'The filter buttons, in order.' }),
+  allLabel: text('“All” button label', { help: 'The last button, which shows every question.' }),
+  emptyText: textarea('Text for a category with no questions', { rows: 2 }),
+  items: list(
+    'Questions',
+    object({
+      question: text('Question'),
+      answer: textarea('Answer', { rows: 4, help: 'A line break starts a new line.' }),
+      categories: list('Categories', text('Category'), { help: 'Type category names exactly as they appear in the list above.' }),
+    }),
+    { itemTitle: 'question' }
+  ),
+  closing: object(
+    {
+      title: heading(),
+      body: lines(),
+      ...twoButtons('“Book an Assessment”', '“Contact Us”'),
+      strokeLeft: select('Left stroke colour', STROKE_TONES),
+      strokeRight: select('Right stroke colour', STROKE_TONES),
+    },
+    'Closing call to action'
+  ),
+});
+
+// ── Support ────────────────────────────────────────────────────────────────
+
+export const supportSchema: Field = object({
+  label: text('Label', { help: 'The coral label above the hero.' }),
+  hero: object(
+    {
+      title: heading(),
+      body: body(),
+      image: optional('Photo', photo('Photo', 'Use a PNG or WebP with a transparent background.'), 'A cut-out filling the right of the card, up to its top and right edges.'),
+      ...twoButtons('“Explore Our Support”', '“Contact Us”'),
+    },
+    'Hero'
+  ),
+  intro: object({ title: heading(), body: lines(), cta: text('“Our Approach” button label') }, 'Different minds. Different needs.'),
+  services: object(
+    {
+      cta: text('“Learn More” link label'),
+      items: list(
+        'Services',
+        object({
+          tab: text('Button label', { help: 'The button above the card.' }),
+          title: text('Title'),
+          subtitle: text('Line under the title'),
+          body: body(),
+          points: list('Points', text('Point'), { help: 'Shown as bullet points.' }),
+          href: text('“Learn More” link', { placeholder: '/support/adhd-coaching' }),
+          image: optional('Photo', photo('Photo'), 'Fills the right of the card.'),
+        }),
+        { itemTitle: 'tab', min: 1, help: 'One card at a time; the buttons and dots switch between them.' }
+      ),
+    },
+    'Support services'
+  ),
+  closing: object(
+    {
+      title: heading(),
+      body: lines(),
+      ...twoButtons('“Explore Assessments”', '“Get in Touch”'),
+      strokeLeft: select('Left stroke colour', STROKE_TONES),
+      strokeRight: select('Right stroke colour', STROKE_TONES),
+    },
+    'Closing call to action'
+  ),
+});

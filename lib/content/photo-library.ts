@@ -47,4 +47,7 @@ export const PHOTO_LIBRARY: LibraryPhoto[] = [
   { src: '/images/conditions/dyslexia/hero.webp', width: 1050, height: 1524, transparent: false },
   { src: '/images/conditions/dyspraxia/hero.webp', width: 1050, height: 1524, transparent: false },
   { src: '/images/conditions/executive-function/hero.webp', width: 1250, height: 1525, transparent: false },
+  { src: '/images/right-to-choose/hero.webp', width: 761, height: 683, transparent: true },
+  { src: '/images/support/hero-cutout.webp', width: 2320, height: 1524, transparent: true },
+  { src: '/images/support/post-diagnostic.webp', width: 589, height: 581, transparent: false },
 ];

@@ -15,8 +15,8 @@ import { pageHeading, pageText } from './aboutStyles';
 import { PageLabel } from './PageLabel';
 import { SwipeRow, swipeCardSize, swipeCardVariants } from './SwipeRow';
 
-/** Step cards get deeper from lilac to violet, as in the design. */
-const STEP_COLOURS = ['bg-[#dbb0f3]', 'bg-[#c889ee]', 'bg-[#b661e8]'];
+/** Step cards get deeper from lilac to violet, as in the design; a fourth step takes the brand violet. */
+const STEP_COLOURS = ['bg-[#dbb0f3]', 'bg-[#c889ee]', 'bg-[#b661e8]', 'bg-brand-violet'];
 
 /**
  * "Understanding first. Support always.": text on the left, the cut-out photo
@@ -67,7 +67,7 @@ function ApproachHero({ content }: { content: ApproachContent['hero'] }) {
 /** The three steps: label at the top, the title and text at the bottom of each card. */
 function Steps({ steps }: { steps: ApproachContent['steps'] }) {
   return (
-    <SwipeRow label="How we work" labels={steps.map((s) => s.label)} className="mt-12 sm:mt-16 xl:u-mt-102">
+    <SwipeRow label="How we work" labels={steps.map((s) => s.label)} desktopCarousel className="mt-12 sm:mt-16 xl:u-mt-102">
       {steps.map((step, i) => (
         <motion.article
           key={i}
@@ -83,7 +83,7 @@ function Steps({ steps }: { steps: ApproachContent['steps'] }) {
           <h2 className="mt-auto pt-10 text-4xl font-bold leading-[1.05] xl:pt-0 xl:u-text-60 xl:u-leading-65">
             <MultiLine text={step.title} always />
           </h2>
-          <p className="mt-3 text-base leading-snug xl:u-mt-15 xl:u-text-25 xl:u-leading-35">
+          <p className="mt-3 text-base leading-snug xl:u-mt-11 xl:u-text-25 xl:u-leading-35">
             <MultiLine text={step.body} />
           </p>
         </motion.article>
@@ -98,7 +98,6 @@ export function ApproachSections({ content }: { content: ApproachContent }) {
     <div className="flex w-full flex-col overflow-x-clip">
       <ApproachHero content={content.hero} />
       <Steps steps={content.steps} />
-      <div className="xl:u-h-73" aria-hidden="true" />
       <ClosingCta content={content.closing} variant="about" />
     </div>
   );

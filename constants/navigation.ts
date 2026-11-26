@@ -26,6 +26,8 @@ export const ROUTES = {
   conditionExecutiveFunction: '/conditions/executive-function',
   support: '/support',
   rightToChoose: '/right-to-choose',
+  /** Where the Right to Choose "Check eligibility" buttons go until there's an eligibility form. */
+  checkEligibility: '/contact',
   professionals: '/for-professionals',
   resources: '/resources',
   faqs: '/resources/faqs',

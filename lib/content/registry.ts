@@ -38,7 +38,10 @@ import {
   type AssessmentPageContent,
   type AssessmentsOverviewContent,
 } from './assessments';
-import { assessmentHubSchema, assessmentPageSchema, assessmentsOverviewSchema, conditionPageSchema } from './assessment-schemas';
+import { assessmentHubSchema, assessmentPageSchema, assessmentsOverviewSchema, conditionPageSchema, faqPageSchema, rightToChooseSchema, supportSchema } from './assessment-schemas';
+import { DEFAULT_SUPPORT, type SupportContent } from './support';
+import { DEFAULT_FAQS, type FaqPageContent } from './faqs';
+import { DEFAULT_RIGHT_TO_CHOOSE, type RightToChooseContent } from './right-to-choose';
 import {
   DEFAULT_CONDITION_ADHD,
   DEFAULT_CONDITION_AUDHD,
@@ -81,6 +84,9 @@ export interface SingleTypes {
   'condition-dyslexia': ConditionPageContent;
   'condition-dyspraxia': ConditionPageContent;
   'condition-executive-function': ConditionPageContent;
+  'right-to-choose': RightToChooseContent;
+  faqs: FaqPageContent;
+  support: SupportContent;
 }
 
 /** The five pages that share the assessment template. */
@@ -140,6 +146,15 @@ export const SINGLES: { [K in SingleKey]: SingleDef<SingleTypes[K]> } = {
   'condition-dyslexia': { label: 'Conditions › Dyslexia', description: 'Every section of the page.', schema: conditionPageSchema, defaults: DEFAULT_CONDITION_DYSLEXIA, path: '/conditions/dyslexia' },
   'condition-dyspraxia': { label: 'Conditions › Dyspraxia', description: 'Every section of the page.', schema: conditionPageSchema, defaults: DEFAULT_CONDITION_DYSPRAXIA, path: '/conditions/dyspraxia' },
   'condition-executive-function': { label: 'Conditions › Executive function', description: 'Every section of the page.', schema: conditionPageSchema, defaults: DEFAULT_CONDITION_EXECUTIVE_FUNCTION, path: '/conditions/executive-function' },
+  'right-to-choose': {
+    label: 'Right to Choose',
+    description: 'Hero, what it is, who can use it, the process, eligibility checks, FAQs and the closing call to action.',
+    schema: rightToChooseSchema,
+    defaults: DEFAULT_RIGHT_TO_CHOOSE,
+    path: '/right-to-choose',
+  },
+  faqs: { label: 'Resources › FAQs', description: 'The categories, every question and answer, and the closing call to action.', schema: faqPageSchema, defaults: DEFAULT_FAQS, path: '/resources/faqs' },
+  support: { label: 'Support', description: 'The hero, the support services carousel and the closing call to action.', schema: supportSchema, defaults: DEFAULT_SUPPORT, path: '/support' },
 };
 
 /** Whether `key` names an editable document. Own-property check, so names like "constructor" aren't mistaken for content. */

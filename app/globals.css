@@ -69,6 +69,16 @@
 @utility u-rounded-* { border-radius: calc(var(--u) * --value(number)); }
 @utility u-scroll-px-* { scroll-padding-inline: calc(var(--u) * --value(number)); }
 
+/* A pink track with a coral thumb (the FAQs list). Chrome ignores the -webkit- rules when scrollbar-color is set, so that is only for other browsers. */
+@utility faq-scrollbar {
+  &::-webkit-scrollbar { width: max(10px, calc(var(--u) * 16)); }
+  &::-webkit-scrollbar-track { background: #ffd4eb; border-radius: 9999px; }
+  &::-webkit-scrollbar-thumb { background: var(--color-brand-coral); border-radius: 9999px; }
+  @supports not selector(::-webkit-scrollbar) {
+    scrollbar-color: var(--color-brand-coral) #ffd4eb;
+  }
+}
+
 /* Hide the native scrollbar while keeping the element scrollable (used by carousels). */
 @utility no-scrollbar {
   scrollbar-width: none;
