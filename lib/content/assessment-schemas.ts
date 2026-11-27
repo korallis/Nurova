@@ -244,3 +244,33 @@ export const supportSchema: Field = object({
     'Closing call to action'
   ),
 });
+
+// ── Support service pages ──────────────────────────────────────────────────
+
+export const supportServicePageSchema: Field = object({
+  label: text('Label', { help: 'The coral label above the hero.' }),
+  hero: object(
+    {
+      title: heading(),
+      body: body(),
+      image: optional(
+        'Photo',
+        photo('Photo', 'A PNG or WebP with a transparent background, framed like the current one so the person stands on the card’s bottom-right.'),
+        'A cut-out on the right; the head can rise above the card.'
+      ),
+      ...twoButtons('“Explore Our Support”', '“Contact Us”'),
+    },
+    'Hero'
+  ),
+  servicesTitle: text('Heading above the services', { help: 'The services themselves are edited on the Support page.' }),
+  closing: object(
+    {
+      title: heading(),
+      body: lines(),
+      ...twoButtons('“Explore Assessments”', '“Get in Touch”'),
+      strokeLeft: select('Left stroke colour', STROKE_TONES),
+      strokeRight: select('Right stroke colour', STROKE_TONES),
+    },
+    'Closing call to action'
+  ),
+});

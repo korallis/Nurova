@@ -38,7 +38,15 @@ import {
   type AssessmentPageContent,
   type AssessmentsOverviewContent,
 } from './assessments';
-import { assessmentHubSchema, assessmentPageSchema, assessmentsOverviewSchema, conditionPageSchema, faqPageSchema, rightToChooseSchema, supportSchema } from './assessment-schemas';
+import { assessmentHubSchema, assessmentPageSchema, assessmentsOverviewSchema, conditionPageSchema, faqPageSchema, rightToChooseSchema, supportSchema, supportServicePageSchema } from './assessment-schemas';
+import {
+  DEFAULT_SUPPORT_ADHD_COACHING,
+  DEFAULT_SUPPORT_MEDICATION,
+  DEFAULT_SUPPORT_PARENT,
+  DEFAULT_SUPPORT_POST_DIAGNOSTIC,
+  DEFAULT_SUPPORT_THERAPY,
+  type SupportServicePageContent,
+} from './support-services';
 import { DEFAULT_SUPPORT, type SupportContent } from './support';
 import { DEFAULT_FAQS, type FaqPageContent } from './faqs';
 import { DEFAULT_RIGHT_TO_CHOOSE, type RightToChooseContent } from './right-to-choose';
@@ -87,6 +95,11 @@ export interface SingleTypes {
   'right-to-choose': RightToChooseContent;
   faqs: FaqPageContent;
   support: SupportContent;
+  'support-post-diagnostic': SupportServicePageContent;
+  'support-adhd-coaching': SupportServicePageContent;
+  'support-therapy': SupportServicePageContent;
+  'support-medication': SupportServicePageContent;
+  'support-parent': SupportServicePageContent;
 }
 
 /** The five pages that share the assessment template. */
@@ -155,6 +168,11 @@ export const SINGLES: { [K in SingleKey]: SingleDef<SingleTypes[K]> } = {
   },
   faqs: { label: 'Resources › FAQs', description: 'The categories, every question and answer, and the closing call to action.', schema: faqPageSchema, defaults: DEFAULT_FAQS, path: '/resources/faqs' },
   support: { label: 'Support', description: 'The hero, the support services carousel and the closing call to action.', schema: supportSchema, defaults: DEFAULT_SUPPORT, path: '/support' },
+  'support-post-diagnostic': { label: 'Support › Post-Diagnostic Support', description: 'Hero and closing call to action. The services carousel is edited on the Support page.', schema: supportServicePageSchema, defaults: DEFAULT_SUPPORT_POST_DIAGNOSTIC, path: '/support/post-diagnostic-support' },
+  'support-adhd-coaching': { label: 'Support › ADHD Coaching', description: 'Hero and closing call to action. The services carousel is edited on the Support page.', schema: supportServicePageSchema, defaults: DEFAULT_SUPPORT_ADHD_COACHING, path: '/support/adhd-coaching' },
+  'support-therapy': { label: 'Support › Therapy', description: 'Hero and closing call to action. The services carousel is edited on the Support page.', schema: supportServicePageSchema, defaults: DEFAULT_SUPPORT_THERAPY, path: '/support/therapy' },
+  'support-medication': { label: 'Support › ADHD Medication Pathway', description: 'Hero and closing call to action. The services carousel is edited on the Support page.', schema: supportServicePageSchema, defaults: DEFAULT_SUPPORT_MEDICATION, path: '/support/medication-pathway' },
+  'support-parent': { label: 'Support › Parent Support', description: 'Hero and closing call to action. The services carousel is edited on the Support page.', schema: supportServicePageSchema, defaults: DEFAULT_SUPPORT_PARENT, path: '/support/parent-support' },
 };
 
 /** Whether `key` names an editable document. Own-property check, so names like "constructor" aren't mistaken for content. */
